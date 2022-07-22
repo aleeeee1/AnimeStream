@@ -1,0 +1,31 @@
+name: baka_animestream
+description: Un app per guardare anime
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.0-44.1.beta <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  dynamic_color: ^1.4.0
+  cached_network_image: ^3.2.1
+  requests: ^4.4.1
+  html: ^0.15.0
+  expandable_widgets: ^1.0.3+1
+  better_player: ^0.0.83
+  animated_text_kit: ^4.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
