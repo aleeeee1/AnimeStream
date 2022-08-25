@@ -16,7 +16,7 @@ class AnimeCard extends StatefulWidget {
 
 class AnimeCardState extends State<AnimeCard> {
   final heroTag = UniqueKey();
-  
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -45,6 +45,7 @@ class AnimeCardState extends State<AnimeCard> {
                   // width: 150,
                   height: 202,
                   child: Hero(
+                    key: UniqueKey(),
                     tag: heroTag,
                     child: CachedNetworkImage(
                       imageUrl: widget.anime.imageUrl,

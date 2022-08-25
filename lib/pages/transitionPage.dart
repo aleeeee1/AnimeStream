@@ -65,6 +65,7 @@ class LoadingPageForAnimeState extends State<LoadingPageForAnime> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Hero(
+                          key: UniqueKey(),
                           tag: widget.heroTag,
                           child: CachedNetworkImage(
                             imageUrl: widget.animeObj.imageUrl,

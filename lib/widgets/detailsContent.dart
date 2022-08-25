@@ -34,6 +34,7 @@ class _DetailsContentState extends State<DetailsContent> {
             children: [
               SizedBox(
                 child: Hero(
+                  key: UniqueKey(),
                   tag: widget.heroTag,
                   child: CachedNetworkImage(
                     height: 170,
@@ -181,11 +182,13 @@ class _DetailsContentState extends State<DetailsContent> {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
+                  debugPrint(anime.episodes[index]['link']);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => PlayerPage(
                         url: anime.episodes[index]['link'],
+                        colorScheme: Theme.of(context).colorScheme,
                       ),
                     ),
                   );

@@ -65,6 +65,7 @@ class _SearchPageState extends State<SearchPage> {
                   search();
                 },
               ),
+              
               const SizedBox(
                 height: 20,
               ),

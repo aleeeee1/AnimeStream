@@ -2,11 +2,11 @@ buildscript {
     ext.kotlin_version = '1.6.21'
     repositories {
         google()
-        mavenCentral()
+        mavencentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.3'
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -18,15 +18,15 @@ allprojects {
     }
 }
 
-rootProject.buildDir = '../build'
+rootproject.builddir = '../build'
 
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.builddir = "${rootproject.builddir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    project.evaluationdependson(':app')
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+task clean(type: delete) {
+    delete rootproject.builddir
 }
