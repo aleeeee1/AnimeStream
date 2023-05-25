@@ -1,10 +1,7 @@
 import 'package:baka_animestream/helper/api.dart';
 import 'package:baka_animestream/services/internal_api.dart';
 import 'package:baka_animestream/ui/widgets/episode_player.dart';
-import 'package:baka_animestream/ui/widgets/player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 import 'package:baka_animestream/helper/classes/anime_obj.dart';
@@ -199,7 +196,7 @@ class LoadingThings extends GetxController {
   void updateProgress() {
     animeModel = fetchAnimeModel(anime);
     progress.value = getProgress();
-    print("Progress: $progress");
+    debugPrint("Progress: $progress");
     update();
   }
 

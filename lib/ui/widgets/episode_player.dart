@@ -3,8 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:baka_animestream/services/internal_api.dart';
 import 'package:baka_animestream/ui/widgets/player.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
@@ -13,7 +11,6 @@ import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 import 'package:baka_animestream/services/internal_db.dart';
 import 'package:baka_animestream/helper/models/anime_model.dart';
-import 'package:baka_animestream/objectbox.g.dart';
 
 class EpisodePlayer extends StatefulWidget {
   final AnimeClass anime;

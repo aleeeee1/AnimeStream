@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../helper/api.dart';
-import '../widgets/animeRow.dart';
+import '../widgets/anime_row.dart';
 
 class HomePage extends StatelessWidget {
   final InternalAPI internalAPI = Get.find<InternalAPI>();
@@ -36,6 +36,8 @@ class HomePage extends StatelessWidget {
       type: 2,
     ),
   ];
+
+  HomePage({super.key});
 
   refresh() async {
     Get.offAllNamed(RouteGenerator.mainPage);

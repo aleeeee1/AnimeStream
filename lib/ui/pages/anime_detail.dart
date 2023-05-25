@@ -1,12 +1,8 @@
-import 'package:baka_animestream/settings/routes.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../helper/classes/anime_obj.dart';
 import '../../helper/api.dart';
-import './error.dart';
-import '../widgets/detailsContent.dart';
-import 'package:get/get.dart';
+import '../widgets/details_content.dart';
 
 class AnimeDetail extends StatefulWidget {
   final AnimeClass animeObj;

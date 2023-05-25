@@ -1,13 +1,10 @@
 import 'package:baka_animestream/services/internal_api.dart';
 import 'package:baka_animestream/ui/widgets/link_button.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:baka_animestream/ui/theme/theme_manager.dart' as theme_manager;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

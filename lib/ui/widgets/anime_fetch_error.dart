@@ -51,6 +51,5 @@ class _LilErrorState extends State<LilError> {
         ],
       ),
     );
-    ;
   }
 }

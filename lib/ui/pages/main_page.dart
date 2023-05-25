@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import './homePage.dart';
-import './searchPage.dart';
-import './settingsPage.dart';
+import 'package:baka_animestream/ui/pages/search_page.dart';
+import 'package:baka_animestream/ui/pages/settings_page.dart';
+import 'package:baka_animestream/ui/pages/home_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -16,7 +16,6 @@ class _MainPageState extends State<MainPage> {
   var index = 0;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     SystemChrome.setPreferredOrientations([
@@ -33,8 +32,8 @@ class _MainPageState extends State<MainPage> {
         index: index,
         children: [
           HomePage(),
-          SearchPage(),
-          SettingsPage(),
+          const SearchPage(),
+          const SettingsPage(),
         ],
       ),
       bottomNavigationBar: NavigationBarTheme(

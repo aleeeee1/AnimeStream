@@ -1,5 +1,4 @@
 import 'package:baka_animestream/settings/routes.dart';
-import 'package:baka_animestream/ui/pages/mainPage.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../helper/models/anime_model.dart';
 import '../../services/internal_db.dart';
-import './animeCard.dart';
+import 'anime_card.dart';
 import '../../helper/classes/anime_obj.dart';
 import 'package:get/get.dart';
 

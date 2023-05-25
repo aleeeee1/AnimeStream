@@ -1,11 +1,11 @@
+import 'package:baka_animestream/helper/classes/anime_obj.dart';
+import 'package:baka_animestream/ui/pages/transition_page.dart';
 import 'package:flutter/material.dart';
 
-import '../ui/pages/homePage.dart';
-import '../ui/pages/animeDetail.dart';
-import '../ui/pages/error.dart';
-import '../ui/pages/mainPage.dart';
-import '../ui/pages/transitionPage.dart';
-import '../helper/classes/anime_obj.dart';
+import 'package:baka_animestream/ui/pages/main_page.dart';
+import 'package:baka_animestream/ui/pages/anime_detail.dart';
+import 'package:baka_animestream/ui/pages/error_page.dart';
+import 'package:baka_animestream/ui/pages/home_page.dart';
 
 class RouteGenerator {
   static const String mainPage = '/';

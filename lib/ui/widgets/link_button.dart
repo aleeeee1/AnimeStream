@@ -23,7 +23,7 @@ class LinkButton extends StatelessWidget {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         visualDensity: VisualDensity.compact,
         textStyle: MaterialStateProperty.all(
-          TextStyle(
+          const TextStyle(
             decoration: TextDecoration.underline,
           ),
         ),

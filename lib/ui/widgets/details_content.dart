@@ -7,7 +7,6 @@ import 'package:expandable_widgets/expandable_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:baka_animestream/helper/classes/anime_obj.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class DetailsContent extends StatefulWidget {
@@ -145,7 +144,7 @@ class _DetailsContentState extends State<DetailsContent> {
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: ExpandableText(
             backgroundColor: Theme.of(context).colorScheme.background,
-            boxShadow: [],
+            boxShadow: const [],
             textWidget: Text(
               anime.description.length > 50
                   ? anime.description
@@ -166,7 +165,7 @@ class _DetailsContentState extends State<DetailsContent> {
         ),
         Padding(
           padding: const EdgeInsets.all(0),
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             child: EpisodePlayer(
               anime: anime,

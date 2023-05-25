@@ -1,12 +1,10 @@
+import 'package:baka_animestream/helper/models/anime_model.dart';
+import 'package:baka_animestream/objectbox.g.dart';
+import 'package:baka_animestream/services/internal_db.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-import '../../helper/models/anime_model.dart';
-import '../../objectbox.g.dart';
-import '../../services/internal_db.dart';
 
 class PlayerPage extends StatefulWidget {
   final String url;
@@ -51,7 +49,7 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
     animeModel.encodeStr();
     objBox.put(animeModel);
 
-    if (kDebugMode) ("Current: " + current.inSeconds.toString());
+    if (kDebugMode) print("Current: ${current.inSeconds.toString()}");
 
     trackTime();
   }
@@ -69,7 +67,7 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
     animeModel = objBox.get(widget.animeId);
     animeModel.decodeStr();
 
-    if (kDebugMode) print("Link: " + widget.url);
+    if (kDebugMode) print("Link: ${widget.url}");
 
     WidgetsBinding.instance.addObserver(this);
 

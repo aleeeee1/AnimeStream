@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../helper/api.dart';
 import '../../helper/classes/anime_obj.dart';
-import '../widgets/animeCard.dart';
+import '../widgets/anime_card.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
