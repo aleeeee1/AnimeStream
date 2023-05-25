@@ -13,6 +13,6 @@ jobs:
     steps:
         - uses: ncipollo/release-action@v1
           with:
-            token: ${{ secrets.TOKEN }}
+            token: ${{ secrets.MY_REPO_SECRET }}
             commit: master
             tag: v2.0.0
