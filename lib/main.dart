@@ -1,11 +1,24 @@
+import 'package:baka_animestream/helper/models/anime_model.dart';
+import 'package:baka_animestream/services/internal_api.dart';
+import 'package:baka_animestream/ui/pages/mainPage.dart';
+import 'package:baka_animestream/ui/theme/theme_builder.dart';
 import 'package:flutter/material.dart';
-import "package:dynamic_color/dynamic_color.dart";
+import 'package:get/get.dart';
 
-import './settings/themes.dart';
-import './settings/routes.dart';
+import 'package:baka_animestream/services/internal_db.dart';
 
-void main(List<String> args) {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  InternalAPI internalApi = InternalAPI();
+  await internalApi.initialize();
+
+  ObjectBox objectBox = await ObjectBox.create();
+  // objectBox.store.box<AnimeModel>().removeAll();
+
+  Get.put(internalApi);
+  Get.put(objectBox);
+
   runApp(const BakaApp());
 }
 
@@ -14,16 +27,9 @@ class BakaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (lightDynamic, darkDynamic) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme(lightDynamic),
-        darkTheme: AppTheme.darkTheme(darkDynamic),
-        themeMode: ThemeMode.system,
-        initialRoute: '/',
-        onGenerateRoute: RouteGenerator.generateRoute,
-        navigatorObservers: [HeroController()],
-      ),
+    return const DynamicThemeBuilder(
+      title: "Anime Stream",
+      home: MainPage(),
     );
   }
 }
