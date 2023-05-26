@@ -7,7 +7,6 @@ class ObjectBox {
 
   ObjectBox._create(this.store) {
     //don't make this growable
-    
   }
 
   static Future<ObjectBox> create() async {

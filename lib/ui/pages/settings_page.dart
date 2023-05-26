@@ -1,6 +1,7 @@
 import 'package:baka_animestream/services/internal_api.dart';
 import 'package:baka_animestream/ui/widgets/link_button.dart';
 import 'package:baka_animestream/ui/widgets/settings_fragments/app_update.dart';
+import 'package:baka_animestream/ui/widgets/settings_fragments/db_backup_handler.dart';
 import 'package:flutter/material.dart';
 
 import 'package:baka_animestream/ui/theme/theme_manager.dart' as theme_manager;
@@ -84,6 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   UpdateApp(),
+                  const DbBackup(),
                   Row(
                     children: [
                       Expanded(

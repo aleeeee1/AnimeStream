@@ -92,7 +92,7 @@ Future<String> getLatestVersion() async {
         .firstWhere((element) => element.text.startsWith("Release"));
 
     var version = release.text.replaceAll("Release ", "");
-    version = version.substring(0, version.indexOf("+"));
+    // version = version.substring(0, version.indexOf("+"));
 
     return version;
   } catch (e) {

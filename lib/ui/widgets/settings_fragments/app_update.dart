@@ -5,19 +5,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:ota_update/ota_update.dart';
 
-class UpdateApp extends StatefulWidget {
-  const UpdateApp({super.key});
+class UpdateApp extends StatelessWidget {
+  UpdateApp({super.key});
 
-  @override
-  State<UpdateApp> createState() => _UpdateAppState();
-}
-
-class _UpdateAppState extends State<UpdateApp> {
-  InternalAPI internalAPI = Get.find<InternalAPI>();
+  final InternalAPI internalAPI = Get.find<InternalAPI>();
 
   beginUpdate(version) async {
     var url = await getLatestVersionUrl(version);
-    print(url);
 
     try {
       OtaUpdate().execute(url);
