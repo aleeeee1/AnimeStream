@@ -42,7 +42,7 @@ jobs:
 
       - name: Get Version
         id: version
-        run: echo ::set-output name=version::${$(cat pubspec.yaml | grep version | head -1 | awk '{print $2}' | sed "s/\'//g")%+*}
+        run: echo ::set-output name=version::$(cat pubspec.yaml | grep version | head -1 | awk '{print $2}' | sed "s/\'//g" | cut -f1 -d"+")
 
       # - uses: actions/upload-artifact@v1
       #   with:

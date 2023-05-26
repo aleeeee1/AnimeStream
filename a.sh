@@ -1,3 +1,1 @@
-name="1.0.0+1"
-# convert 1.0.0+1 to 1.0.0
-echo ${name%%+*}
+echo ::set-output name=version::$(cat pubspec.yaml | grep version | head -1 | awk '{print $2}' | sed "s/\'//g" | cut -f1 -d"+")

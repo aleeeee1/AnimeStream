@@ -16,7 +16,7 @@ class _UpdateAppState extends State<UpdateApp> {
   InternalAPI internalAPI = Get.find<InternalAPI>();
 
   beginUpdate(version) async {
-    var url = await getLatestVersionUrl("latest");
+    var url = await getLatestVersionUrl(version);
     print(url);
 
     try {
