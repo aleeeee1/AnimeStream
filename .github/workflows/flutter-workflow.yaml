@@ -42,7 +42,7 @@ jobs:
 
       - name: Get Version
         id: version
-        run: echo ::set-output name=version::$(cat pubspec.yaml | grep version | head -1 | awk '{print $2}' | sed "s/\'//g")
+        run: echo ::set-output name=version::${$(cat pubspec.yaml | grep version | head -1 | awk '{print $2}' | sed "s/\'//g")%+*}
 
       # - uses: actions/upload-artifact@v1
       #   with:
@@ -54,7 +54,7 @@ jobs:
 
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: "latest"
+          automatic_release_tag: ${{ steps.version.outputs.version }}
           title: "Release ${{ steps.version.outputs.version }}"
           prerelease: false
           files: |

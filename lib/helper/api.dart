@@ -70,3 +70,32 @@ AnimeModel fetchAnimeModel(AnimeClass anime) {
 
   return animeModel;
 }
+
+Future<String> getLatestVersionUrl(version) async {
+  String url =
+      "https://github.com/aleeeee1/AnimeStream/releases/download/$version/app-release.apk";
+
+  return url;
+}
+
+Future<String> getLatestVersion() async {
+  var url = Uri.parse(
+    "https://github.com/aleeeee1/AnimeStream/releases/latest",
+  );
+
+  try {
+    var response = await http.get(url);
+    var document = parse(response.body);
+
+    var release = document
+        .getElementsByTagName('h1')
+        .firstWhere((element) => element.text.startsWith("Release"));
+
+    var version = release.text.replaceAll("Release ", "");
+    version = version.substring(0, version.indexOf("+"));
+
+    return version;
+  } catch (e) {
+    return "";
+  }
+}
