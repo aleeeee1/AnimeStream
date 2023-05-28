@@ -1,5 +1,6 @@
 import 'package:baka_animestream/helper/api.dart';
 import 'package:baka_animestream/services/internal_api.dart';
+import 'package:baka_animestream/ui/widgets/details_content.dart';
 import 'package:baka_animestream/ui/widgets/episode_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,9 @@ class EpisodeTile extends StatefulWidget {
   final AnimeClass anime;
   final int index;
 
-  const EpisodeTile({super.key, required this.anime, required this.index});
+  final ResumeController resumeController;
+
+  const EpisodeTile({super.key, required this.anime, required this.index, required this.resumeController});
 
   @override
   State<EpisodeTile> createState() => _EpisodeTileState();
@@ -53,9 +56,9 @@ class _EpisodeTileState extends State<EpisodeTile> {
       alignment: Alignment.bottomLeft,
       children: [
         EpisodePlayer(
+          resumeController: widget.resumeController,
           anime: anime,
           index: index,
-          animeModel: animeModel,
           controller: loading,
           borderRadius: 7,
           child: Container(
@@ -177,11 +180,14 @@ class LoadingThings extends GetxController {
     required this.anime,
     required this.index,
     required this.animeModel,
-  });
+  }) {
+    lastIndex = animeModel.lastSeenEpisodeIndex?.obs ?? 0.obs;
+  }
 
   var loading = false.obs;
   var error = false.obs;
   var progress = 0.0.obs;
+  late Rx<int> lastIndex;
 
   void setLoading(bool value) {
     loading.value = value;
@@ -197,6 +203,14 @@ class LoadingThings extends GetxController {
     animeModel = fetchAnimeModel(anime);
     progress.value = getProgress();
     debugPrint("Progress: $progress");
+    update();
+  }
+
+  updateIndex() {
+    animeModel = fetchAnimeModel(anime);
+    lastIndex.value = animeModel.lastSeenEpisodeIndex ?? 0;
+
+    debugPrint("Last Index: $lastIndex");
     update();
   }
 

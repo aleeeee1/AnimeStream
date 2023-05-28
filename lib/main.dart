@@ -1,3 +1,4 @@
+import 'package:baka_animestream/helper/models/anime_model.dart';
 import 'package:baka_animestream/services/internal_api.dart';
 import 'package:baka_animestream/ui/pages/main_page.dart';
 import 'package:baka_animestream/ui/theme/theme_builder.dart';

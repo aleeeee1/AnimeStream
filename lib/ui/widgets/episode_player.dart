@@ -1,3 +1,5 @@
+import 'package:baka_animestream/helper/api.dart';
+import 'package:baka_animestream/ui/widgets/details_content.dart';
 import 'package:baka_animestream/ui/widgets/details_content_fragments/episode_tile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,22 +16,25 @@ import 'package:baka_animestream/helper/models/anime_model.dart';
 
 class EpisodePlayer extends StatefulWidget {
   final AnimeClass anime;
-  final AnimeModel animeModel;
 
   final Widget child;
-  final int index;
+  final int? index;
 
   final LoadingThings controller;
+  final ResumeController resumeController;
+
   final int? borderRadius;
+  final bool resume;
 
   const EpisodePlayer({
     super.key,
     required this.child,
     required this.anime,
-    required this.index,
-    required this.animeModel,
+    this.index,
     required this.controller,
+    required this.resumeController,
     this.borderRadius,
+    this.resume = false,
   });
 
   @override
@@ -39,7 +44,6 @@ class EpisodePlayer extends StatefulWidget {
 class _EpisodePlayerState extends State<EpisodePlayer> {
   late WebViewPlusController theController;
 
-  late AnimeModel animeModel;
   late AnimeClass anime;
   late int index;
 
@@ -49,10 +53,7 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
   @override
   void initState() {
     anime = widget.anime;
-    index = widget.index;
-    animeModel = widget.animeModel;
-
-    if (kDebugMode) ('$index ${animeModel.lastSeenEpisodeIndex}');
+    index = widget.index ?? -1;
 
     super.initState();
   }
@@ -139,13 +140,19 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
   }
 
   void trackProgress() {
+    var animeModel = fetchAnimeModel(anime);
     animeModel.lastSeenDate = DateTime.now();
     animeModel.lastSeenEpisodeIndex = index;
 
     Get.find<ObjectBox>().store.box<AnimeModel>().put(animeModel);
+    widget.resumeController.updateIndex();
   }
 
   void handleClick() async {
+    if (widget.resume) {
+      index = widget.resumeController.index.value;
+    }
+
     var link = anime.episodes[index]['link'];
     trackProgress();
 

@@ -59,16 +59,14 @@ Future<List> toContinueAnime() {
 AnimeModel fetchAnimeModel(AnimeClass anime) {
   AnimeModel? tmp = objBox.get(anime.id);
   AnimeModel toPut = anime.toModel;
-  AnimeModel animeModel;
 
   if (tmp != null) {
     toPut = tmp;
   }
 
-  animeModel = toPut;
-  animeModel.decodeStr();
+  toPut.decodeStr();
 
-  return animeModel;
+  return toPut;
 }
 
 Future<String> getLatestVersionUrl(version) async {

@@ -23,7 +23,9 @@ class _DetailsContentState extends State<DetailsContent> {
 
   late final AnimeClass anime;
   late AnimeModel animeModel;
+
   late LoadingThings controller;
+  late ResumeController resumeController;
 
   @override
   void initState() {
@@ -33,6 +35,11 @@ class _DetailsContentState extends State<DetailsContent> {
       anime: anime,
       animeModel: animeModel,
       index: animeModel.lastSeenEpisodeIndex ?? 0,
+    );
+
+    resumeController = ResumeController(
+      anime: anime,
+      index_: animeModel.lastSeenEpisodeIndex ?? 0,
     );
 
     super.initState();
@@ -167,24 +174,24 @@ class _DetailsContentState extends State<DetailsContent> {
           padding: const EdgeInsets.all(0),
           child: SizedBox(
             width: double.infinity,
-            child: EpisodePlayer(
-              anime: anime,
-              animeModel: animeModel,
-              controller: controller,
-              index: animeModel.lastSeenEpisodeIndex ?? 0,
-              borderRadius: 90,
-              child: Container(
-                height: 40,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                  borderRadius: BorderRadius.circular(90),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(
-                      () => controller.error.value
+            child: Obx(
+              () => EpisodePlayer(
+                anime: anime,
+                controller: controller,
+                resumeController: resumeController,
+                resume: true,
+                borderRadius: 90,
+                child: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    borderRadius: BorderRadius.circular(90),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      controller.error.value
                           ? Icon(
                               Icons.error,
                               color: Theme.of(context)
@@ -205,35 +212,36 @@ class _DetailsContentState extends State<DetailsContent> {
                                       .colorScheme
                                       .onSecondaryContainer,
                                 ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Riprendi",
-                      style: TextStyle(
-                        color:
-                            Theme.of(context).colorScheme.onSecondaryContainer,
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
+                      Text(
+                        "Riprendi",
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer,
+                        ),
+                      ),
+                    ],
 
-                  // child: ElevatedButton.icon(
-                  //   style: ButtonStyle(
-                  //     backgroundColor: MaterialStateProperty.all<Color>(
-                  //       Theme.of(context).colorScheme.secondaryContainer,
-                  //     ),
-                  //   ),
-                  //   onPressed: null,
-                  //   icon: Icon(
-                  //     Icons.play_arrow,
-                  //     color: Theme.of(context).colorScheme.onSecondaryContainer,
-                  //   ),
-                  //   label: Text(
-                  //     "Riprendi",
-                  //     style: TextStyle(
-                  //       color: Theme.of(context).colorScheme.onSecondaryContainer,
-                  //     ),
+                    // child: ElevatedButton.icon(
+                    //   style: ButtonStyle(
+                    //     backgroundColor: MaterialStateProperty.all<Color>(
+                    //       Theme.of(context).colorScheme.secondaryContainer,
+                    //     ),
+                    //   ),
+                    //   onPressed: null,
+                    //   icon: Icon(
+                    //     Icons.play_arrow,
+                    //     color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    //   ),
+                    //   label: Text(
+                    //     "Riprendi",
+                    //     style: TextStyle(
+                    //       color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    //     ),
+                  ),
                 ),
               ),
             ),
@@ -278,11 +286,31 @@ class _DetailsContentState extends State<DetailsContent> {
             ),
             itemCount: anime.episodes.length,
             itemBuilder: (context, index) {
-              return EpisodeTile(anime: anime, index: index);
+              return EpisodeTile(
+                anime: anime,
+                index: index,
+                resumeController: resumeController,
+              );
             },
           ),
         )
       ],
     );
+  }
+}
+
+class ResumeController extends GetxController {
+  final Rx<int> index;
+  final AnimeClass anime;
+
+  ResumeController({required int index_, required this.anime})
+      : index = index_.obs;
+
+  updateIndex() {
+    AnimeModel animeModel = fetchAnimeModel(anime);
+    index.value = animeModel.lastSeenEpisodeIndex ?? 0;
+
+    debugPrint("updateIndex: ${index.value}");
+    update();
   }
 }
