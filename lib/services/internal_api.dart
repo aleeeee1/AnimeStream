@@ -20,12 +20,15 @@ class InternalAPI {
   ObjectBox objBox = Get.find<ObjectBox>();
 
   late final String dbPath;
+  late final String dbBackupPath;
 
   Future<void> initialize() async {
     prefs = await SharedPreferences.getInstance();
 
     final docsDir = await getApplicationDocumentsDirectory();
-    dbPath = p.join(docsDir.path, "obx-example");
+
+    dbPath = p.join(docsDir.path, "obx");
+    dbBackupPath = p.join(docsDir.path, "obx-backup");
   }
 
   String getFakeServer() {
@@ -101,9 +104,10 @@ class InternalAPI {
           ..writeAsBytesSync(data);
       }
 
+      await Restart.restartApp();
       return 0;
     } catch (e) {
-      if (kDebugMode) print(e);
+      if (kDebugMode) rethrow;
       return 1;
     }
   }

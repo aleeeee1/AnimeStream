@@ -16,14 +16,16 @@ class DbBackup extends StatelessWidget {
   final InternalAPI internalAPI = Get.find<InternalAPI>();
 
   checkPermissions(context) async {
-    var status = await Permission.manageExternalStorage.request();
-    if (!status.isGranted) {
+    PermissionStatus status = await Permission.storage.request();
+    PermissionStatus a = await Permission.manageExternalStorage.request();
+    if (!a.isGranted && !status.isGranted) {
       Get.snackbar(
         "Permessi mancanti",
         "Per poter esportare il database è necessario fornire i permessi di scrittura",
         snackPosition: SnackPosition.BOTTOM,
         barBlur: 0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
+        onTap: (_) => openAppSettings(),
         colorText: Theme.of(context).colorScheme.onSecondary,
       );
       return 0;
