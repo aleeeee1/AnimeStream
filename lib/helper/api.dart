@@ -97,3 +97,7 @@ Future<String> getLatestVersion() async {
     return "";
   }
 }
+
+void eraseDb() {
+  objBox.removeAll();
+}

@@ -1,16 +1,31 @@
 import 'dart:io';
 
+import 'package:archive/archive_io.dart';
+import 'package:baka_animestream/helper/models/anime_model.dart';
+import 'package:baka_animestream/objectbox.g.dart';
+import 'package:baka_animestream/services/internal_db.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import 'package:archive/archive.dart';
+
 class InternalAPI {
   late SharedPreferences prefs;
+  ObjectBox objBox = Get.find<ObjectBox>();
+
+  late final String dbPath;
 
   Future<void> initialize() async {
     prefs = await SharedPreferences.getInstance();
+
+    final docsDir = await getApplicationDocumentsDirectory();
+    dbPath = p.join(docsDir.path, "obx-example");
   }
 
   String getFakeServer() {
@@ -60,27 +75,36 @@ class InternalAPI {
   }
 
   Future<int> exportDb() async {
-    final docsDir = await getApplicationDocumentsDirectory();
-    var path = p.join(docsDir.path, "obx-example", "data.mdb");
-
-    var file = File(path);
-    if (file.existsSync()) {
-      var dir =
-          await getExternalStorageDirectories(type: StorageDirectory.documents);
-      await file.copy('$dir/data.mdb');
+    try {
+      var encoder = ZipFileEncoder();
+      encoder.zipDirectory(
+        Directory(dbPath),
+        filename: '/sdcard/Documents/obx.zip',
+      );
       return 0;
-    } else {
+    } catch (e) {
       return 1;
     }
   }
 
-  importDb(String dbPath) async {
-    final docsDir = await getApplicationDocumentsDirectory();
-    var path = p.join(docsDir.path, "obx-example", "data.mdb");
+  importDb(String backupPath) async {
+    try {
+      var bytes = File(backupPath).readAsBytesSync();
+      var archive = ZipDecoder().decodeBytes(bytes);
 
-    var file = File(dbPath);
-    if (file.existsSync()) {
-      file.copy(path);
+      for (var file in archive) {
+        var filename = file.name;
+        var data = file.content as List<int>;
+
+        File(p.join(dbPath, filename))
+          ..createSync(recursive: true)
+          ..writeAsBytesSync(data);
+      }
+
+      return 0;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      return 1;
     }
   }
 }

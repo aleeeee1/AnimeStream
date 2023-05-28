@@ -10,14 +10,13 @@ import 'package:baka_animestream/services/internal_db.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+ObjectBox objectBox = await ObjectBox.create();
+// objectBox.store.box<AnimeModel>().removeAll();
+Get.put(objectBox);
+
   InternalAPI internalApi = InternalAPI();
   await internalApi.initialize();
-
-  ObjectBox objectBox = await ObjectBox.create();
-  // objectBox.store.box<AnimeModel>().removeAll();
-
   Get.put(internalApi);
-  Get.put(objectBox);
 
   runApp(const BakaApp());
 }
