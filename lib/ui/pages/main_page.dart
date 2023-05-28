@@ -52,7 +52,8 @@ class _MainPageState extends State<MainPage> {
           // labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           animationDuration: const Duration(milliseconds: 1200),
           selectedIndex: index,
-          onDestinationSelected: (value) => setState(() => index = value),
+          onDestinationSelected: (value) =>
+              index == value ? null : setState(() => index = value),
           destinations: [
             NavigationDestination(
               icon: Icon(

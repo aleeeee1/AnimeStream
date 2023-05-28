@@ -36,15 +36,17 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
   late AnimeModel animeModel;
 
   void trackTime() async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
 
-    var current = _controller.videoPlayerController!.value.position;
-    var duration = _controller.videoPlayerController!.value.duration;
+    var current = _controller.videoPlayerController?.value.position ??
+        Duration(seconds: 0);
+    var duration = _controller.videoPlayerController?.value.duration ??
+        Duration(seconds: 0);
     // update the lastMinutage of the episode
     animeModel.episodes[widget.episodeId.toString()] = [
       current.inSeconds,
-      duration!.inSeconds
+      duration.inSeconds
     ];
     animeModel.encodeStr();
     objBox.put(animeModel);
