@@ -40,6 +40,7 @@ dependencies:
   file_picker: ^5.2.10
   restart_app: ^1.1.2
   permission_handler: ^10.2.0
+  archive: ^3.3.7
 
 dev_dependencies:
   flutter_test:

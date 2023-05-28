@@ -33,7 +33,7 @@ class _MainPageState extends State<MainPage> {
         children: [
           HomePage(),
           const SearchPage(),
-          const SettingsPage(),
+          SettingsPage(),
         ],
       ),
       bottomNavigationBar: NavigationBarTheme(
