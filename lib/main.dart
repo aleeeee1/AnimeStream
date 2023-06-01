@@ -7,7 +7,11 @@ import 'package:get/get.dart';
 
 import 'package:baka_animestream/services/internal_db.dart';
 
+import 'package:flutter_meedu_videoplayer/meedu_player.dart';
+
 void main() async {
+  initMeeduPlayer();
+
   WidgetsFlutterBinding.ensureInitialized();
 
   ObjectBox objectBox = await ObjectBox.create();

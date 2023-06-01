@@ -5,6 +5,7 @@ import 'package:baka_animestream/helper/models/anime_model.dart';
 import 'package:baka_animestream/objectbox.g.dart';
 import 'package:baka_animestream/services/internal_db.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,7 +42,7 @@ class InternalAPI {
   }
 
   bool getDarkThemeStatus() {
-    return prefs.getBool('darkTheme') ?? false;
+    return prefs.getBool('darkTheme') ?? ThemeMode.system == ThemeMode.dark;
   }
 
   bool getDynamicThemeStatus() {

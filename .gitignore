@@ -45,3 +45,6 @@ app.*.map.json
 
 certs/
 *.jks
+
+forks/*
+forks/

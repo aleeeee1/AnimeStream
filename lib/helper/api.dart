@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
 
 Future<List> latestAnime() async {
-  var url = Uri.parse("https://animeunity.tv/");
+  var url = Uri.parse("https://animeunity.it/");
   var response = await http.get(url, headers: {"Accept": "application/json"});
   var document = parse(response.body);
   var bo =
@@ -21,7 +21,7 @@ Future<List> latestAnime() async {
 }
 
 Future<List> popularAnime() async {
-  var url = Uri.parse("https://www.animeunity.tv/top-anime?popular=true");
+  var url = Uri.parse("https://www.animeunity.it/top-anime?popular=true");
   var response = await http.get(url, headers: {"Accept": "application/json"});
   var document = parse(response.body);
   var bo = document.getElementsByTagName('top-anime')[0].attributes['animes'];

@@ -87,16 +87,16 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
               print("Link: $link");
             }
 
+            setState(() {
+              fantasticWidget = null;
+            });
+
             setLoading(false);
             if (link.isNotEmpty) {
               openPlayer(link);
             } else {
               setError(true);
             }
-
-            setState(() {
-              fantasticWidget = null;
-            });
           },
         ),
       ),

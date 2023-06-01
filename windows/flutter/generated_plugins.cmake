@@ -4,12 +4,20 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   dynamic_color
+  flutter_meedu_videoplayer
+  fullscreen_window
+  media_kit_libs_windows_video
+  media_kit_video
   objectbox_flutter_libs
   permission_handler_windows
+  screen_brightness_windows
+  screen_retriever
   url_launcher_windows
+  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  media_kit_native_event_loop
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

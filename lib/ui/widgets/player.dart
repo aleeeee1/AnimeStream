@@ -1,9 +1,11 @@
+import 'package:baka_animestream/helper/api.dart';
 import 'package:baka_animestream/helper/models/anime_model.dart';
 import 'package:baka_animestream/objectbox.g.dart';
 import 'package:baka_animestream/services/internal_db.dart';
-import 'package:better_player/better_player.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:flutter_meedu_videoplayer/meedu_player.dart';
 import 'package:get/get.dart';
 
 class PlayerPage extends StatefulWidget {
@@ -25,36 +27,11 @@ class PlayerPage extends StatefulWidget {
   State<PlayerPage> createState() => PlayerPageState();
 }
 
-class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
-  late BetterPlayerController _controller;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<State<StatefulWidget>> betterPlayerKey = GlobalKey();
-  late List colors = [];
-
-  Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
-
+class PlayerPageState extends State<PlayerPage> {
+  late MeeduPlayerController _meeduPlayerController;
   late AnimeModel animeModel;
 
-  void trackTime() async {
-    await Future.delayed(const Duration(seconds: 1));
-    if (!mounted) return;
-
-    var current = _controller.videoPlayerController?.value.position ??
-        Duration(seconds: 0);
-    var duration = _controller.videoPlayerController?.value.duration ??
-        Duration(seconds: 0);
-    // update the lastMinutage of the episode
-    animeModel.episodes[widget.episodeId.toString()] = [
-      current.inSeconds,
-      duration.inSeconds
-    ];
-    animeModel.encodeStr();
-    objBox.put(animeModel);
-
-    if (kDebugMode) print("Current: ${current.inSeconds.toString()}");
-
-    trackTime();
-  }
+  Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
 
   int getSeconds() {
     var currTime = animeModel.episodes[widget.episodeId.toString()];
@@ -64,116 +41,89 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    super.initState();
-
     animeModel = objBox.get(widget.animeId);
     animeModel.decodeStr();
 
-    if (kDebugMode) print("Link: ${widget.url}");
-
-    WidgetsBinding.instance.addObserver(this);
-
-    mediaPlayerControllerSetUp();
-    _controller.setOverriddenFit(BoxFit.contain);
-    _controller.enablePictureInPicture(betterPlayerKey);
-
-    trackTime();
-  }
-
-  final indicator = const CircularProgressIndicator();
-
-  void mediaPlayerControllerSetUp() {
-    _controller = BetterPlayerController(
-      BetterPlayerConfiguration(
-        fullScreenByDefault: true,
-        expandToFill: true,
-        autoDetectFullscreenAspectRatio: true,
-        fit: BoxFit.fitHeight,
-        handleLifecycle: false,
-        autoDetectFullscreenDeviceOrientation: true,
-        autoPlay: true,
-        allowedScreenSleep: false,
-        autoDispose: true,
-        startAt: Duration(seconds: getSeconds()),
-        fullScreenAspectRatio: 16 / 9,
-        controlsConfiguration: BetterPlayerControlsConfiguration(
-          enableQualities: false,
-          enableSubtitles: false,
-          enableAudioTracks: false,
-          enablePip: true,
-          overflowModalColor: widget.colorScheme.secondaryContainer,
-          overflowMenuIconsColor: widget.colorScheme.onSecondaryContainer,
-          overflowModalTextColor: widget.colorScheme.onSecondaryContainer,
-          iconsColor: widget.colorScheme.primary,
-          playIcon: Icons.play_arrow,
-          pauseIcon: Icons.pause_outlined,
-          playerTheme: BetterPlayerTheme.cupertino,
-          enableFullscreen: true,
-          controlBarColor: widget.colorScheme.background.withOpacity(.60),
-          loadingWidget: indicator,
-          progressBarPlayedColor: widget.colorScheme.primary,
-          progressBarBufferedColor:
-              widget.colorScheme.secondary.withAlpha(0xAF),
-          progressBarBackgroundColor:
-              widget.colorScheme.secondaryContainer.withAlpha(0xFF),
-          progressBarHandleColor: widget.colorScheme.primary,
-        ),
+    _meeduPlayerController = MeeduPlayerController(
+      colorTheme: widget.colorScheme.primary,
+      pipEnabled: true,
+      showLogs: true,
+      loadingWidget: CircularProgressIndicator(
+        color: widget.colorScheme.primary,
       ),
-      betterPlayerDataSource: BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network,
-        widget.url,
-        headers: {
-          // "Content-Range": "bytes 0-100000/100000",
-        },
-        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
-          minBufferMs: 60000,
-          maxBufferMs: 555000,
-        ),
-        cacheConfiguration: const BetterPlayerCacheConfiguration(
-          useCache: true,
-          preCacheSize: 400000,
-          maxCacheSize: 400000,
-          maxCacheFileSize: 400000,
+      screenManager: const ScreenManager(
+        forceLandScapeInFullscreen: true,
+        orientations: [
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ],
+      ),
+      enabledButtons: const EnabledButtons(
+        fullscreen: false,
+        muteAndSound: false,
+        pip: true,
+        playPauseAndRepeat: true,
+        playBackSpeed: false,
+        videoFit: true,
+        rewindAndfastForward: false,
+      ),
+      controlsStyle: ControlsStyle.primary,
+      customIcons: const CustomIcons(
+        pip: Icon(Icons.picture_in_picture_alt),
+        videoFit: Icon(Icons.fit_screen),
+        play: Icon(Icons.play_arrow, size: 50),
+        pause: Icon(Icons.pause, size: 50),
+      ),
+      header: Align(
+        alignment: Alignment.topLeft,
+        child: BackButton(
+          color: widget.colorScheme.primary,
         ),
       ),
     );
-  }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
+    _meeduPlayerController.setDataSource(
+      DataSource(
+        type: DataSourceType.network,
+        source: widget.url,
+      ),
+      autoplay: true,
+      seekTo: Duration(seconds: getSeconds()),
+    );
 
-    switch (state) {
-      case AppLifecycleState.resumed:
-        _controller.setControlsAlwaysVisible(true);
-        break;
-      case AppLifecycleState.inactive:
-        _controller.pause();
-        break;
-      case AppLifecycleState.paused:
-        break;
-      case AppLifecycleState.detached:
-        break;
-    }
+    _meeduPlayerController.onDataStatusChanged.listen((event) {
+      if (event == DataStatus.loaded) {
+        _meeduPlayerController.setFullScreen(true, context);
+      }
+    });
+
+    _meeduPlayerController.onFullscreenChanged.listen((event) {
+      if (event == false) {
+        Get.back();
+      }
+    });
+
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
+    _meeduPlayerController.dispose();
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
 
-    WidgetsBinding.instance.removeObserver(this);
-    _controller.clearCache();
-    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _formKey,
-      backgroundColor: Colors.black,
-      body: BetterPlayer(
-        key: betterPlayerKey,
-        controller: _controller,
+    return Material(
+      child: MeeduVideoPlayer(
+        controller: _meeduPlayerController,
       ),
     );
   }

@@ -1,0 +1,180 @@
+import 'package:baka_animestream/helper/models/anime_model.dart';
+import 'package:baka_animestream/objectbox.g.dart';
+import 'package:baka_animestream/services/internal_db.dart';
+import 'package:better_player/better_player.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class PlayerPage extends StatefulWidget {
+  final String url;
+  final ColorScheme colorScheme;
+
+  final int animeId;
+  final int episodeId;
+
+  const PlayerPage({
+    Key? key,
+    required this.url,
+    required this.colorScheme,
+    required this.animeId,
+    required this.episodeId,
+  }) : super(key: key);
+
+  @override
+  State<PlayerPage> createState() => PlayerPageState();
+}
+
+class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
+  late BetterPlayerController _controller;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<State<StatefulWidget>> betterPlayerKey = GlobalKey();
+  late List colors = [];
+
+  Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
+
+  late AnimeModel animeModel;
+
+  void trackTime() async {
+    await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
+
+    var current = _controller.videoPlayerController?.value.position ??
+        Duration(seconds: 0);
+    var duration = _controller.videoPlayerController?.value.duration ??
+        Duration(seconds: 0);
+    // update the lastMinutage of the episode
+    animeModel.episodes[widget.episodeId.toString()] = [
+      current.inSeconds,
+      duration.inSeconds
+    ];
+    animeModel.encodeStr();
+    objBox.put(animeModel);
+
+    if (kDebugMode) print("Current: ${current.inSeconds.toString()}");
+
+    trackTime();
+  }
+
+  int getSeconds() {
+    var currTime = animeModel.episodes[widget.episodeId.toString()];
+    if (currTime == null) return 0;
+    return currTime[0];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    animeModel = objBox.get(widget.animeId);
+    animeModel.decodeStr();
+
+    if (kDebugMode) print("Link: ${widget.url}");
+
+    WidgetsBinding.instance.addObserver(this);
+
+    mediaPlayerControllerSetUp();
+    _controller.setOverriddenFit(BoxFit.contain);
+    _controller.enablePictureInPicture(betterPlayerKey);
+
+    trackTime();
+  }
+
+  final indicator = const CircularProgressIndicator();
+
+  void mediaPlayerControllerSetUp() {
+    _controller = BetterPlayerController(
+      BetterPlayerConfiguration(
+        fullScreenByDefault: true,
+        expandToFill: true,
+        autoDetectFullscreenAspectRatio: true,
+        fit: BoxFit.fitHeight,
+        handleLifecycle: false,
+        autoDetectFullscreenDeviceOrientation: true,
+        autoPlay: true,
+        allowedScreenSleep: false,
+        autoDispose: true,
+        startAt: Duration(seconds: getSeconds()),
+        fullScreenAspectRatio: 16 / 9,
+        controlsConfiguration: BetterPlayerControlsConfiguration(
+          enableQualities: false,
+          enableSubtitles: false,
+          enableAudioTracks: false,
+          enablePip: true,
+          overflowModalColor: widget.colorScheme.secondaryContainer,
+          overflowMenuIconsColor: widget.colorScheme.onSecondaryContainer,
+          overflowModalTextColor: widget.colorScheme.onSecondaryContainer,
+          iconsColor: widget.colorScheme.primary,
+          playIcon: Icons.play_arrow,
+          pauseIcon: Icons.pause_outlined,
+          playerTheme: BetterPlayerTheme.cupertino,
+          enableFullscreen: true,
+          controlBarColor: widget.colorScheme.background.withOpacity(.60),
+          loadingWidget: indicator,
+          progressBarPlayedColor: widget.colorScheme.primary,
+          progressBarBufferedColor:
+              widget.colorScheme.secondary.withAlpha(0xAF),
+          progressBarBackgroundColor:
+              widget.colorScheme.secondaryContainer.withAlpha(0xFF),
+          progressBarHandleColor: widget.colorScheme.primary,
+        ),
+      ),
+      betterPlayerDataSource: BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network,
+        widget.url,
+        headers: {
+          // "Content-Range": "bytes 0-100000/100000",
+        },
+        bufferingConfiguration: const BetterPlayerBufferingConfiguration(
+          minBufferMs: 60000,
+          maxBufferMs: 555000,
+        ),
+        cacheConfiguration: const BetterPlayerCacheConfiguration(
+          useCache: true,
+          preCacheSize: 400000,
+          maxCacheSize: 400000,
+          maxCacheFileSize: 400000,
+        ),
+      ),
+    );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _controller.setControlsAlwaysVisible(true);
+        break;
+      case AppLifecycleState.inactive:
+        _controller.pause();
+        break;
+      case AppLifecycleState.paused:
+        break;
+      case AppLifecycleState.detached:
+        break;
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    WidgetsBinding.instance.removeObserver(this);
+    _controller.clearCache();
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _formKey,
+      backgroundColor: Colors.black,
+      body: BetterPlayer(
+        key: betterPlayerKey,
+        controller: _controller,
+      ),
+    );
+  }
+}

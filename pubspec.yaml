@@ -41,6 +41,24 @@ dependencies:
   restart_app: ^1.1.2
   permission_handler: ^10.2.0
   archive: ^3.3.7
+  media_kit_libs_android_video: ^1.0.5
+  media_kit_libs_ios_video: ^1.0.4
+  flutter_meedu_videoplayer:
+    git:
+      url: https://github.com/aleeeee1/flutter_meedu_videoplayer.git
+      ref: master
+      path: ./package/
+  # flutter_meedu_videoplayer:
+  #   path: ./forks/flutter_meedu_videoplayer/package
+
+  flutter_native_splash: ^2.2.19
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path_ios: "assets/images/splash.png"
+  image_path_android: "assets/images/splash.png"
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +67,11 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.3.3
   objectbox_generator: any
+  animated_native_splash:
+    git: https://github.com/asbn223/flutter_animated_splash_screen
 
 flutter:
   uses-material-design: true
+
+animated_native_splash:
+  jsonFile: assets/splash2.json
