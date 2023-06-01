@@ -41,6 +41,8 @@ class PlayerPageState extends State<PlayerPage> {
 
   @override
   void initState() {
+    debugPrint("Player page");
+
     animeModel = objBox.get(widget.animeId);
     animeModel.decodeStr();
 
@@ -105,6 +107,8 @@ class PlayerPageState extends State<PlayerPage> {
       }
     });
 
+    trackTime();
+
     super.initState();
   }
 
@@ -117,6 +121,25 @@ class PlayerPageState extends State<PlayerPage> {
     // ]);
 
     super.dispose();
+  }
+
+  void trackTime() async {
+    await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
+
+    var current = _meeduPlayerController.position.value;
+    var duration = _meeduPlayerController.duration.value;
+    // update the lastMinutage of the episode
+    animeModel.episodes[widget.episodeId.toString()] = [
+      current.inSeconds,
+      duration.inSeconds
+    ];
+    animeModel.encodeStr();
+    objBox.put(animeModel);
+
+    debugPrint("Current: ${current.inSeconds.toString()}");
+
+    trackTime();
   }
 
   @override

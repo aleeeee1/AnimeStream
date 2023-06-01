@@ -29,7 +29,6 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
   late BetterPlayerController _controller;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<State<StatefulWidget>> betterPlayerKey = GlobalKey();
-  late List colors = [];
 
   Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
 
