@@ -1,4 +1,5 @@
 import 'package:baka_animestream/helper/classes/anime_obj.dart';
+import 'package:html/dom.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'dart:async';
@@ -10,31 +11,87 @@ import 'package:get/get.dart';
 
 Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
 
+Future<Document> makeRequestAndGetDocument(String url) async {
+  var response = await http.get(
+    Uri.parse(url),
+    headers: {"Accept": "application/json"},
+  );
+  return parse(response.body);
+}
+
+Future<List<Element>> getElements(
+  Document document,
+  String tagName, {
+  int maxTry = 10,
+  required String url,
+}) async {
+  List<Element> elements = document.getElementsByTagName(tagName);
+  int i = 0;
+  while (elements.isEmpty && i < maxTry) {
+    document = await makeRequestAndGetDocument(url);
+    elements = document.getElementsByTagName(tagName);
+    i++;
+  }
+  return elements;
+}
+
 Future<List> latestAnime() async {
-  var url = Uri.parse("https://animeunity.it/");
-  var response = await http.get(url, headers: {"Accept": "application/json"});
-  var document = parse(response.body);
-  var bo =
-      document.getElementsByTagName('layout-items')[0].attributes['items-json'];
-  var json = jsonDecode(bo!);
+  Document document = await makeRequestAndGetDocument(
+    "https://animeunity.it/",
+  );
+
+  List<Element> elements = await getElements(
+    document,
+    'layout-items',
+    url: "https://animeunity.it/",
+  );
+
+  if (elements.isEmpty) {
+    throw Exception("No elements found");
+  }
+
+  var data = elements[0].attributes['items-json'];
+  var json = jsonDecode(data!);
   return json['data'];
 }
 
 Future<List> popularAnime() async {
-  var url = Uri.parse("https://www.animeunity.it/top-anime?popular=true");
-  var response = await http.get(url, headers: {"Accept": "application/json"});
-  var document = parse(response.body);
-  var bo = document.getElementsByTagName('top-anime')[0].attributes['animes'];
-  var json = jsonDecode(bo!);
+  Document document = await makeRequestAndGetDocument(
+    "https://www.animeunity.it/top-anime?popular=true",
+  );
+
+  List<Element> elements = await getElements(
+    document,
+    'top-anime',
+    url: "https://www.animeunity.it/top-anime?popular=true",
+  );
+
+  if (elements.isEmpty) {
+    return [];
+  }
+
+  var data = elements[0].attributes['animes'];
+  var json = jsonDecode(data!);
   return json['data'];
 }
 
 Future<List> searchAnime({String title = ""}) async {
-  var url = Uri.parse("https://animeunity.it/archivio?title=$title");
-  var response = await http.get(url, headers: {"Accept": "application/json"});
-  var document = parse(response.body);
-  var bo = document.getElementsByTagName('archivio')[0].attributes['records'];
-  var json = jsonDecode(bo!);
+  Document document = await makeRequestAndGetDocument(
+    "https://animeunity.it/archivio?title=$title",
+  );
+
+  List<Element> elements = await getElements(
+    document,
+    'archivio',
+    url: "https://animeunity.it/archivio?title=$title",
+  );
+
+  if (elements.isEmpty) {
+    return [];
+  }
+
+  var data = elements[0].attributes['records'];
+  var json = jsonDecode(data!);
   return json;
 }
 
