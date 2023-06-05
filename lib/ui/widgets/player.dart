@@ -1,7 +1,9 @@
 import 'package:baka_animestream/helper/api.dart';
+import 'package:baka_animestream/helper/classes/anime_obj.dart';
 import 'package:baka_animestream/helper/models/anime_model.dart';
 import 'package:baka_animestream/objectbox.g.dart';
 import 'package:baka_animestream/services/internal_db.dart';
+import 'package:baka_animestream/ui/widgets/details_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,12 +17,15 @@ class PlayerPage extends StatefulWidget {
   final int animeId;
   final int episodeId;
 
+  final AnimeClass anime;
+
   const PlayerPage({
     Key? key,
     required this.url,
     required this.colorScheme,
     required this.animeId,
     required this.episodeId,
+    required this.anime,
   }) : super(key: key);
 
   @override
@@ -32,6 +37,7 @@ class PlayerPageState extends State<PlayerPage> {
   late AnimeModel animeModel;
 
   Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
+  int index = 0;
 
   int getSeconds() {
     var currTime = animeModel.episodes[widget.episodeId.toString()];
@@ -45,6 +51,8 @@ class PlayerPageState extends State<PlayerPage> {
 
     animeModel = objBox.get(widget.animeId);
     animeModel.decodeStr();
+
+    index = animeModel.lastSeenEpisodeIndex!;
 
     _meeduPlayerController = MeeduPlayerController(
       colorTheme: widget.colorScheme.primary,
@@ -104,6 +112,12 @@ class PlayerPageState extends State<PlayerPage> {
     _meeduPlayerController.onFullscreenChanged.listen((event) {
       if (event == false) {
         Get.back();
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ]);
       }
     });
 
@@ -115,12 +129,13 @@ class PlayerPageState extends State<PlayerPage> {
   @override
   void dispose() {
     _meeduPlayerController.dispose();
-    // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    //   DeviceOrientation.portraitDown,
-    // ]);
-
     super.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
   }
 
   void trackTime() async {
@@ -134,6 +149,13 @@ class PlayerPageState extends State<PlayerPage> {
       current.inSeconds,
       duration.inSeconds
     ];
+
+    int remaining = duration.inSeconds - current.inSeconds;
+    if (remaining < 120 && remaining != -1 && duration.inSeconds > 0) {
+      animeModel.lastSeenEpisodeIndex =
+          (index + 1) % widget.anime.episodes.length;
+    }
+
     animeModel.encodeStr();
     objBox.put(animeModel);
 

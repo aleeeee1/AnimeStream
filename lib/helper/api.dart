@@ -1,4 +1,5 @@
 import 'package:baka_animestream/helper/classes/anime_obj.dart';
+import 'package:baka_animestream/services/internal_api.dart';
 import 'package:html/dom.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
@@ -10,6 +11,7 @@ import 'package:baka_animestream/services/internal_db.dart';
 import 'package:get/get.dart';
 
 Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
+InternalAPI internalAPI = Get.find<InternalAPI>();
 
 Future<Document> makeRequestAndGetDocument(String url) async {
   var response = await http.get(
@@ -20,11 +22,11 @@ Future<Document> makeRequestAndGetDocument(String url) async {
 }
 
 Future<List<Element>> getElements(
-  Document document,
   String tagName, {
   int maxTry = 10,
   required String url,
 }) async {
+  Document document = await makeRequestAndGetDocument(url);
   List<Element> elements = document.getElementsByTagName(tagName);
   int i = 0;
   while (elements.isEmpty && i < maxTry) {
@@ -36,12 +38,7 @@ Future<List<Element>> getElements(
 }
 
 Future<List> latestAnime() async {
-  Document document = await makeRequestAndGetDocument(
-    "https://animeunity.it/",
-  );
-
   List<Element> elements = await getElements(
-    document,
     'layout-items',
     url: "https://animeunity.it/",
   );
@@ -56,12 +53,7 @@ Future<List> latestAnime() async {
 }
 
 Future<List> popularAnime() async {
-  Document document = await makeRequestAndGetDocument(
-    "https://www.animeunity.it/top-anime?popular=true",
-  );
-
   List<Element> elements = await getElements(
-    document,
     'top-anime',
     url: "https://www.animeunity.it/top-anime?popular=true",
   );
@@ -76,12 +68,7 @@ Future<List> popularAnime() async {
 }
 
 Future<List> searchAnime({String title = ""}) async {
-  Document document = await makeRequestAndGetDocument(
-    "https://animeunity.it/archivio?title=$title",
-  );
-
   List<Element> elements = await getElements(
-    document,
     'archivio',
     url: "https://animeunity.it/archivio?title=$title",
   );
@@ -128,14 +115,14 @@ AnimeModel fetchAnimeModel(AnimeClass anime) {
 
 Future<String> getLatestVersionUrl(version) async {
   String url =
-      "https://github.com/aleeeee1/AnimeStream/releases/download/$version/app-release.apk";
+      "${internalAPI.repoLink}/releases/download/$version/app-release.apk";
 
   return url;
 }
 
 Future<String> getLatestVersion() async {
   var url = Uri.parse(
-    "https://github.com/aleeeee1/AnimeStream/releases/latest",
+    "${internalAPI.repoLink}/releases/latest",
   );
 
   try {

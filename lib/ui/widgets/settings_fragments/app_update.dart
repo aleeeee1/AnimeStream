@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:baka_animestream/helper/api.dart';
 import 'package:baka_animestream/services/internal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:ota_update/ota_update.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UpdateApp extends StatelessWidget {
   UpdateApp({super.key});
@@ -36,30 +39,63 @@ class UpdateApp extends StatelessWidget {
     if (latest == current) {
       Fluttertoast.showToast(msg: "L'app è già aggiornata :D");
     } else {
-      Get.dialog(
-        AlertDialog(
-          title: const Text("Aggiornamento disponibile"),
-          content: const Text(
-            "È disponibile un aggiornamento per l'app, vuoi aggiornare?",
+      if (Platform.isAndroid) {
+        Get.dialog(
+          AlertDialog(
+            title: const Text("Aggiornamento disponibile"),
+            content: const Text(
+              "È disponibile un aggiornamento per l'app, vuoi aggiornare?",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Annulla"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  Get.back();
+                  Fluttertoast.showToast(msg: "Download in corso...");
+                  await beginUpdate(latest);
+                },
+                child: const Text("Aggiorna"),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: const Text("Annulla"),
+        );
+      } else {
+        Get.dialog(
+          AlertDialog(
+            title: const Text("Aggiornamento disponibile"),
+            content: const Text(
+              "È disponibile un aggiornamento per l'app, ma visto che hai un iPhone devi aggiornare manualmente. Come? O te lo compili da solo, o mi chiedi di farlo quando ci vediamo. ¯\\_(ツ)_/¯",
             ),
-            TextButton(
-              onPressed: () async {
-                Get.back();
-                Fluttertoast.showToast(msg: "Download in corso...");
-                await beginUpdate(latest);
-              },
-              child: const Text("Aggiorna"),
-            ),
-          ],
-        ),
-      );
+            actions: [
+              TextButton(
+                child: const Text("Voglio compilarmela ad solo"),
+                onPressed: () {
+                  Fluttertoast.showToast(
+                    msg: "Ok, allora buona fortuna :D",
+                  );
+
+                  launchUrl(
+                    Uri.parse(internalAPI.repoLink),
+                  );
+
+                  Get.back();
+                },
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Ok"),
+              ),
+            ],
+          ),
+        );
+      }
     }
   }
 

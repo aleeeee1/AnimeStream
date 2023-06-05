@@ -99,6 +99,7 @@ PODS:
     - FMDB (>= 2.7.5)
   - SwiftyGif (5.4.4)
   - Toast (4.0.0)
+  - UIPiPView (0.1.0)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
@@ -129,6 +130,7 @@ DEPENDENCIES:
   - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - UIPiPView (from `https://github.com/uakihir0/UIPiPView/`, branch `main`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
   - volume_controller (from `.symlinks/plugins/volume_controller/ios`)
@@ -187,6 +189,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  UIPiPView:
+    :branch: main
+    :git: https://github.com/uakihir0/UIPiPView/
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   video_player_avfoundation:
@@ -197,6 +202,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/wakelock/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+
+CHECKOUT OPTIONS:
+  UIPiPView:
+    :commit: 55994ac410ec29d81958f689b22eae0917445da9
+    :git: https://github.com/uakihir0/UIPiPView/
 
 SPEC CHECKSUMS:
   auto_orientation: 102ed811a5938d52c86520ddd7ecd3a126b5d39d
@@ -229,12 +239,13 @@ SPEC CHECKSUMS:
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  UIPiPView: 5d60e5976a586cec12c411241aff3fcbd3ceb2ac
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
   volume_controller: 531ddf792994285c9b17f9d8a7e4dcdd29b3eae9
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 
-PODFILE CHECKSUM: 0aa8921dabec26fb8ba83350779378cd71df1abb
+PODFILE CHECKSUM: 56e8199080f156f2d2629fcf2c4b700d5e65c05c
 
 COCOAPODS: 1.11.3

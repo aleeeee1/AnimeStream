@@ -60,7 +60,7 @@ class SettingsPage extends StatelessWidget {
                 future: internalAPI.getVersion(),
                 builder: (ctx, snapshot) => LinkButton(
                   urlLabel: "v${snapshot.data ?? "0.0.0"}",
-                  url: "https://github.com/aleeeee1",
+                  url: internalAPI.repoLink,
                 ),
               ),
             ),

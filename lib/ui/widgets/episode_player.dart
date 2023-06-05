@@ -74,10 +74,22 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
           },
           onPageFinished: (_) async {
             await Future.delayed(Duration(seconds: internalAPI.getWaitTime()));
-            var link = await theController.webViewController
-                .runJavascriptReturningResult(
-              'document.querySelector("a.plyr__controls__item")["href"]',
-            );
+            late String link;
+            try {
+              link = await theController.webViewController
+                  .runJavascriptReturningResult(
+                'document.querySelector("a.plyr__controls__item")["href"]',
+              );
+            } catch (e) {
+              setLoading(false);
+              setError(true);
+
+              setState(() {
+                fantasticWidget = null;
+              });
+
+              return;
+            }
 
             link = link.replaceAll('"', '');
             if (kDebugMode) {
@@ -134,9 +146,12 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
         colorScheme: Theme.of(context).colorScheme,
         animeId: anime.id,
         episodeId: anime.episodes[index]['id'],
+        anime: anime,
       ),
     );
+
     widget.controller.updateProgress();
+    widget.resumeController.updateIndex();
   }
 
   void trackProgress() {
@@ -150,7 +165,7 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
 
   void handleClick() async {
     if (widget.resume) {
-      index = widget.resumeController.index.value;
+      index = widget.resumeController.index.value % (anime.episodes.length);
     }
 
     var link = anime.episodes[index]['link'];

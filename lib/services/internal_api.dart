@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart' as p_provider;
 
 import 'package:archive/archive.dart';
 
@@ -23,18 +23,21 @@ class InternalAPI {
   late final String dbPath;
   late final String dbBackupPath;
 
+  final String repoLink = "https://github.com/aleeeee1/AnimeStream";
+
   Future<void> initialize() async {
     prefs = await SharedPreferences.getInstance();
 
-    final docsDir = await getApplicationDocumentsDirectory();
+    final docsDir = Platform.isAndroid
+        ? await p_provider.getApplicationDocumentsDirectory()
+        : await p_provider.getLibraryDirectory();
 
     dbPath = p.join(docsDir.path, "obx");
     dbBackupPath = p.join(docsDir.path, "obx-backup");
   }
 
   String getFakeServer() {
-    return prefs.getString('fakeServer') ??
-        'https://d3df-79-40-231-54.ngrok-free.app';
+    return prefs.getString('fakeServer') ?? '';
   }
 
   Future<void> setFakeServer(String value) async {
@@ -79,14 +82,23 @@ class InternalAPI {
   }
 
   Future<int> exportDb() async {
+    String path = "/sdcard/Documents/obx.zip";
+    if (Platform.isIOS) {
+      var dir = await p_provider.getApplicationDocumentsDirectory();
+
+      path = p.join(dir.path, "obx.zip");
+      debugPrint(path);
+    }
+
     try {
       var encoder = ZipFileEncoder();
       encoder.zipDirectory(
         Directory(dbPath),
-        filename: '/sdcard/Documents/obx.zip',
+        filename: path,
       );
       return 0;
     } catch (e) {
+      if (kDebugMode) rethrow;
       return 1;
     }
   }
@@ -105,7 +117,6 @@ class InternalAPI {
           ..writeAsBytesSync(data);
       }
 
-      await Restart.restartApp();
       return 0;
     } catch (e) {
       if (kDebugMode) rethrow;

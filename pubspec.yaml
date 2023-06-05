@@ -46,13 +46,34 @@ dependencies:
   flutter_meedu_videoplayer:
     git:
       url: https://github.com/aleeeee1/flutter_meedu_videoplayer.git
-      ref: master
+      ref: ios_pip_support
       path: ./package/
+
   # flutter_meedu_videoplayer:
   #   path: ./forks/flutter_meedu_videoplayer/package
 
   flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.1
+  webview_flutter: ^3.0.4
+
+dependency_overrides:
+  video_player_avfoundation:
+    git:
+      url: https://github.com/vanlooverenkoen/flutter-packages/
+      ref: feature/#60048-ios-picture-in-picture
+      path: packages/video_player/video_player_avfoundation
+
+  video_player_platform_interface:
+    git:
+      url: https://github.com/vanlooverenkoen/flutter-packages/
+      ref: feature/#60048-ios-picture-in-picture
+      path: packages/video_player/video_player_platform_interface
+
+  video_player:
+    git:
+      url: https://github.com/vanlooverenkoen/flutter-packages/
+      ref: feature/#60048-ios-picture-in-picture
+      path: packages/video_player/video_player
 
 flutter_launcher_icons:
   android: true

@@ -27,6 +27,35 @@ class _DetailsContentState extends State<DetailsContent> {
   late LoadingThings controller;
   late ResumeController resumeController;
 
+  int getRemaining(int index) {
+    if (animeModel.episodes
+        .containsKey(anime.episodes[index]['id'].toString())) {
+      var currTime =
+          animeModel.episodes[anime.episodes[index]['id'].toString()][0];
+      var totTime =
+          animeModel.episodes[anime.episodes[index]['id'].toString()][1];
+
+      return totTime - currTime;
+    }
+
+    return -1;
+  }
+
+  int getLatestIndex() {
+    int index = animeModel.lastSeenEpisodeIndex ?? 0;
+    print("index prima: $index");
+
+    int remaining = getRemaining(index);
+
+    if (remaining < 120 && remaining != -1) {
+      index = index + 1;
+    }
+
+    index %= (anime.episodes.length - 1 );
+    print("index dopo: $index");
+    return index;
+  }
+
   @override
   void initState() {
     anime = widget.anime;
@@ -39,7 +68,7 @@ class _DetailsContentState extends State<DetailsContent> {
 
     resumeController = ResumeController(
       anime: anime,
-      index_: animeModel.lastSeenEpisodeIndex ?? 0,
+      index_: getLatestIndex(),
     );
 
     super.initState();
