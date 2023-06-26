@@ -11,7 +11,7 @@ class MainActivity: MeeduPlayerFlutterActivity() {
            val trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(
                object : X509TrustManager {
                    val acceptedIssuers: Array<Any?>?
-                       get() = arrayOfNulls(0)
+                       get() = arrayOfNulls(0) 
 
                    override fun checkClientTrusted(certs: Array<X509Certificate?>?, authType: String?) {}
                    override fun checkServerTrusted(certs: Array<X509Certificate?>?, authType: String?) {}

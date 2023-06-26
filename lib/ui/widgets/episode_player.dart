@@ -13,6 +13,7 @@ import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 import 'package:baka_animestream/services/internal_db.dart';
 import 'package:baka_animestream/helper/models/anime_model.dart';
+import 'package:dart_ipify/dart_ipify.dart';
 
 class EpisodePlayer extends StatefulWidget {
   final AnimeClass anime;
@@ -62,6 +63,8 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
   }
 
   void initWebView() async {
+    bool redirected = false;
+
     fantasticWidget = SizedBox(
       height: widget.height,
       child: Offstage(
@@ -76,41 +79,71 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
             theController = controller;
           },
           onPageFinished: (_) async {
-            late String link;
-            try {
-              link = await theController.webViewController
+            if (!redirected) {
+              redirected = true;
+              String link = await theController.webViewController
                   .runJavascriptReturningResult(
-                'document.querySelector("a.plyr__controls__item")["href"]',
+                "document.getElementsByTagName(\"iframe\")[0].src",
               );
-            } catch (e) {
-              setLoading(false);
-              setError(true);
 
-              setState(() {
-                fantasticWidget = null;
-              });
-
+              if (link == "null") {
+                setError(true);
+              } else {
+                theController.loadUrl(link.replaceAll("\"", ""));
+              }
               return;
             }
 
-            link = link.replaceAll('"', '');
-            if (kDebugMode) {
-              print(
-                "Link: ${await theController.webViewController.currentUrl()}",
-              );
-              print("Link: $link");
+            String link = await theController.webViewController
+                .runJavascriptReturningResult(
+              """function getLink() {
+  const downloadIp = "${await Ipify.ipv4()}";
+  const tokenDownload = generateToken(2, downloadIp, "Yc8U6r8KjAKAepEA");
+  const downloadUrl =
+    "https://au-d1-0" +
+    window.videoMetadata.proxy_download +
+    ".scws-content.net/download/" +
+    window.videoMetadata.storage_download.number +
+    "/" +
+    window.videoMetadata.folder_id +
+    "/" +
+    window.videoMetadata.quality +
+    "p.mp4" +
+    "?token=" +
+    tokenDownload +
+    "&filename=" +
+    window.videoMetadata.name.replace("&", ".");
+  return downloadUrl;
+}
+
+function generateToken(hours, client_ip, secret) {
+  var expires = new Date(Date.now() + 1000 * 60 * 60 * hours).getTime();
+  expires = String(Math.round(expires / 1000));
+  var input = expires + client_ip + " " + secret;
+  var binaryHash = CryptoJS.MD5(input);
+  var base64Value = binaryHash.toString(CryptoJS.enc.Base64);
+  return (
+    base64Value.replace(/=/g, "").replace(/\\+/g, "-").replace(/\\//g, "_") +
+    "&expires=" +
+    expires
+  );
+}
+
+getLink();
+""",
+            );
+
+            link = link.replaceAll("\"", "");
+            if (link == "null" || !await isLinkOk(link)) {
+              setError(true);
+            } else {
+              openPlayer(link);
             }
 
+            setLoading(false);
             setState(() {
               fantasticWidget = null;
             });
-
-            setLoading(false);
-            if (await isLinkOk(link)) {
-              openPlayer(link);
-            } else {
-              setError(true);
-            }
           },
         ),
       ),
