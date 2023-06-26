@@ -76,7 +76,6 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
             theController = controller;
           },
           onPageFinished: (_) async {
-            await Future.delayed(Duration(seconds: internalAPI.getWaitTime()));
             late String link;
             try {
               link = await theController.webViewController
@@ -107,7 +106,7 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
             });
 
             setLoading(false);
-            if (link.isNotEmpty) {
+            if (await isLinkOk(link)) {
               openPlayer(link);
             } else {
               setError(true);

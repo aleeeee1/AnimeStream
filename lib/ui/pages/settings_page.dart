@@ -50,7 +50,7 @@ class SettingsPage extends StatelessWidget {
                     indent: 30,
                     endIndent: 30,
                   ),
-                  const TimeHandler(),
+                  // const TimeHandler(),
                 ],
               ),
             ),
