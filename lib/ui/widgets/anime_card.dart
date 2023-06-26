@@ -5,14 +5,25 @@ import 'package:get/get.dart';
 
 import '../../helper/classes/anime_obj.dart';
 
-class AnimeCard extends StatelessWidget {
-  AnimeClass anime;
-  final heroTag = UniqueKey();
+class AnimeCard extends StatefulWidget {
+  final AnimeClass anime;
 
-  AnimeCard({
+  const AnimeCard({
     super.key,
     required this.anime,
   });
+
+  @override
+  State<AnimeCard> createState() => AnimeCardState();
+}
+
+class AnimeCardState extends State<AnimeCard> {
+  final heroTag = UniqueKey();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +33,7 @@ class AnimeCard extends StatelessWidget {
       onTap: () async {
         await Get.toNamed(
           RouteGenerator.loadAnime,
-          arguments: [anime, heroTag],
+          arguments: [widget.anime, heroTag],
         );
       },
       child: SizedBox(
@@ -48,7 +59,7 @@ class AnimeCard extends StatelessWidget {
                     key: UniqueKey(),
                     tag: heroTag,
                     child: CachedNetworkImage(
-                      imageUrl: anime.imageUrl,
+                      imageUrl: widget.anime.imageUrl,
                       fit: BoxFit.cover,
                       placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(),
@@ -75,7 +86,7 @@ class AnimeCard extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    anime.title,
+                    widget.anime.title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSecondaryContainer,

@@ -8,24 +8,26 @@ import '../widgets/anime_row.dart';
 
 class HomePage extends StatelessWidget {
   final InternalAPI internalAPI = Get.find<InternalAPI>();
+  final GlobalKey<State<StatefulWidget>> continueKey = GlobalKey();
 
-  final rows = const [
+  final rows = [
     AnimeRow(
+      key: UniqueKey(),
       function: toContinueAnime,
       name: "Riprendi a guardare",
       type: 3,
     ),
-    AnimeRow(
+    const AnimeRow(
       function: latestAnime,
       name: "Ulime uscite",
       type: 0,
     ),
-    AnimeRow(
+    const AnimeRow(
       function: popularAnime,
       name: "Anime popolari",
       type: 1,
     ),
-    AnimeRow(
+    const AnimeRow(
       function: searchAnime,
       name: "Tutti gli anime",
       type: 2,

@@ -51,7 +51,7 @@ class _DetailsContentState extends State<DetailsContent> {
       index = index + 1;
     }
 
-    index %= (anime.episodes.length - 1 );
+    index %= (anime.episodes.length - 1);
     print("index dopo: $index");
     return index;
   }
@@ -210,6 +210,7 @@ class _DetailsContentState extends State<DetailsContent> {
                 resumeController: resumeController,
                 resume: true,
                 borderRadius: 90,
+                height: 40,
                 child: Container(
                   height: 40,
                   width: double.infinity,

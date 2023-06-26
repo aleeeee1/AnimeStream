@@ -24,6 +24,8 @@ class EpisodePlayer extends StatefulWidget {
   final ResumeController resumeController;
 
   final int? borderRadius;
+  final double height;
+
   final bool resume;
 
   const EpisodePlayer({
@@ -34,6 +36,7 @@ class EpisodePlayer extends StatefulWidget {
     required this.controller,
     required this.resumeController,
     this.borderRadius,
+    this.height = 63,
     this.resume = false,
   });
 
@@ -60,7 +63,7 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
 
   void initWebView() async {
     fantasticWidget = SizedBox(
-      height: 63,
+      height: widget.height,
       child: Offstage(
         offstage: true,
         child: WebViewPlus(
