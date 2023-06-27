@@ -32,7 +32,7 @@ class PlayerPage extends StatefulWidget {
   State<PlayerPage> createState() => PlayerPageState();
 }
 
-class PlayerPageState extends State<PlayerPage> {
+class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
   late MeeduPlayerController _meeduPlayerController;
   late AnimeModel animeModel;
 
@@ -48,6 +48,7 @@ class PlayerPageState extends State<PlayerPage> {
   @override
   void initState() {
     debugPrint("Player page");
+    WidgetsBinding.instance.addObserver(this);
 
     animeModel = objBox.get(widget.animeId);
     animeModel.decodeStr();
@@ -129,13 +130,22 @@ class PlayerPageState extends State<PlayerPage> {
   @override
   void dispose() {
     _meeduPlayerController.dispose();
-    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    super.dispose();
+  }
+
+  @override
+  didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      _meeduPlayerController.enterPip(context);
+    }
   }
 
   void trackTime() async {
