@@ -11,8 +11,11 @@ import 'package:baka_animestream/ui/widgets/anime_fetch_error.dart';
 class LoadingPageForAnime extends StatefulWidget {
   final AnimeClass animeObj;
   final Key heroTag;
-  const LoadingPageForAnime(
-      {super.key, required this.animeObj, required this.heroTag});
+  const LoadingPageForAnime({
+    super.key,
+    required this.animeObj,
+    required this.heroTag,
+  });
 
   @override
   State<LoadingPageForAnime> createState() => LoadingPageForAnimeState();
@@ -80,13 +83,17 @@ class LoadingPageForAnimeState extends State<LoadingPageForAnime> {
                             height: 280,
                           ),
                         ),
-                        Flexible(
-                          child: Text(
-                            widget.animeObj.title,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onBackground,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: const EdgeInsets.all(40),
+                          child: Flexible(
+                            child: Text(
+                              widget.animeObj.title,
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
