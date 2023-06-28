@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 import 'package:baka_animestream/helper/api.dart';
@@ -62,62 +63,82 @@ class LoadingPageForAnimeState extends State<LoadingPageForAnime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
+      extendBodyBehindAppBar: true,
       body: error
           ? LilError(animeObj: widget.animeObj, heroTag: widget.heroTag)
-          : Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 700,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Hero(
-                          key: UniqueKey(),
-                          tag: widget.heroTag,
-                          child: CachedNetworkImage(
-                            imageUrl: widget.animeObj.imageUrl,
-                            height: 280,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(40),
-                          child: Flexible(
-                            child: Text(
-                              widget.animeObj.title,
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+          : Stack(
+              children: [
+                Positioned.fill(
+                  child: Image.asset(
+                    'assets/images/single.png',
+                    color: Theme.of(context).colorScheme.primary,
+                    repeat: ImageRepeat.repeat,
+                    scale: 30,
+                    opacity: const AlwaysStoppedAnimation(0.2),
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 800,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Hero(
+                              key: UniqueKey(),
+                              tag: widget.heroTag,
+                              child: CachedNetworkImage(
+                                imageUrl: widget.animeObj.imageUrl,
+                                height: 280,
                               ),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 30,
+                                right: 30,
+                                top: 10,
+                              ),
+                              child: Text(
+                                widget.animeObj.title,
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    child: AnimatedTextKit(
-                      repeatForever: true,
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          'Caricamento...',
-                          speed: const Duration(milliseconds: 100),
+                      ),
+                      DefaultTextStyle(
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
+                        child: AnimatedTextKit(
+                          repeatForever: true,
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                              'Caricamento...',
+                              speed: const Duration(milliseconds: 100),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
     );
   }
