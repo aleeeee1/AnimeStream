@@ -1,7 +1,6 @@
 import 'package:baka_animestream/helper/api.dart';
 import 'package:baka_animestream/ui/widgets/details_content.dart';
 import 'package:baka_animestream/ui/widgets/details_content_fragments/episode_tile.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:baka_animestream/services/internal_api.dart';
 import 'package:baka_animestream/ui/widgets/player.dart';
@@ -13,7 +12,6 @@ import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 import 'package:baka_animestream/services/internal_db.dart';
 import 'package:baka_animestream/helper/models/anime_model.dart';
-import 'package:dart_ipify/dart_ipify.dart';
 
 class EpisodePlayer extends StatefulWidget {
   final AnimeClass anime;
@@ -94,10 +92,10 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
               return;
             }
 
-            String link = await theController.webViewController
-                .runJavascriptReturningResult(
-              """function getLink() {
-  const downloadIp = "${await Ipify.ipv4()}";
+            String ipAddress = await getPublicIpAddress();
+
+            String toRun = """function getLink() {
+  const downloadIp = "$ipAddress";
   const tokenDownload = generateToken(2, downloadIp, "Yc8U6r8KjAKAepEA");
   const downloadUrl =
     "https://au-d1-0" +
@@ -130,8 +128,9 @@ function generateToken(hours, client_ip, secret) {
 }
 
 getLink();
-""",
-            );
+""";
+            String link = await theController.webViewController
+                .runJavascriptReturningResult(toRun);
 
             link = link.replaceAll("\"", "");
             if (link == "null" || !await isLinkOk(link)) {

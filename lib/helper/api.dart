@@ -145,3 +145,13 @@ Future<String> getLatestVersion() async {
 void eraseDb() {
   objBox.removeAll();
 }
+
+Future<String> getPublicIpAddress() async {
+  var url = Uri.parse("https://ifconfig.io/ip");
+  try {
+    var response = await http.get(url);
+    return response.body.replaceAll("\n", "");
+  } catch (e) {
+    return "";
+  }
+}
