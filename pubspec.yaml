@@ -39,14 +39,14 @@ dependencies:
   archive: ^3.3.7
   media_kit_libs_android_video: ^1.0.5
   media_kit_libs_ios_video: ^1.0.4
-  # flutter_meedu_videoplayer:
-  #   git:
-  #     url: https://github.com/aleeeee1/flutter_meedu_videoplayer.git
-  #     ref: ios_pip_support
-  #     path: ./package/
-
   flutter_meedu_videoplayer:
-    path: ./forks/flutter_meedu_videoplayer/package
+    git:
+      url: https://github.com/aleeeee1/flutter_meedu_videoplayer.git
+      ref: ios_pip_support
+      path: ./package/
+
+  # flutter_meedu_videoplayer:
+  #   path: ./forks/flutter_meedu_videoplayer/package
 
   flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.1

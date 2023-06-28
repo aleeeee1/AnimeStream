@@ -415,9 +415,11 @@ packages:
   flutter_meedu_videoplayer:
     dependency: "direct main"
     description:
-      path: "forks/flutter_meedu_videoplayer/package"
-      relative: true
-    source: path
+      path: package
+      ref: ios_pip_support
+      resolved-ref: e686bd063e9041c160ece63b68671c148c6386f2
+      url: "https://github.com/aleeeee1/flutter_meedu_videoplayer.git"
+    source: git
     version: "4.2.13"
   flutter_native_splash:
     dependency: "direct main"
