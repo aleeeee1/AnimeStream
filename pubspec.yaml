@@ -3,7 +3,7 @@ description: Un app per guardare anime
 
 publish_to: "none"
 
-version: 1.1.4+1
+version: 1.1.5+1
 
 environment:
   sdk: ">=2.18.0-44.1.beta <3.0.0"
@@ -94,6 +94,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
 
 animated_native_splash:
   jsonFile: assets/splash2.json
