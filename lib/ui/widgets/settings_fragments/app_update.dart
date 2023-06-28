@@ -15,9 +15,33 @@ class UpdateApp extends StatelessWidget {
 
   beginUpdate(version) async {
     var url = await getLatestVersionUrl(version);
+    var progress = 0.obs;
 
     try {
-      OtaUpdate().execute(url);
+      OtaUpdate().execute(url).listen((OtaEvent event) {
+        progress.value = int.tryParse(event.value!) ?? progress.value;
+      });
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Download"),
+          content: Row(
+            children: [
+              const Text("Sto scaricando l'aggiornamento... :D"),
+              const SizedBox(width: 10),
+              SizedBox(
+                height: 20,
+                width: 20,
+                child: Obx(
+                  () => CircularProgressIndicator(
+                    value: progress.value / 100,
+                    strokeWidth: 2.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
     } catch (e) {
       Fluttertoast.showToast(msg: "Errore durante l'aggiornamento");
     }
@@ -101,7 +125,6 @@ class UpdateApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // tile with button
     return ListTile(
       title: Text(
         "Aggiorna l'app",
