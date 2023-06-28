@@ -39,9 +39,9 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
     if (!mounted) return;
 
     var current = _controller.videoPlayerController?.value.position ??
-        Duration(seconds: 0);
+        const Duration(seconds: 0);
     var duration = _controller.videoPlayerController?.value.duration ??
-        Duration(seconds: 0);
+        const Duration(seconds: 0);
     // update the lastMinutage of the episode
     animeModel.episodes[widget.episodeId.toString()] = [
       current.inSeconds,

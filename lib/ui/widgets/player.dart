@@ -1,9 +1,7 @@
-import 'package:baka_animestream/helper/api.dart';
 import 'package:baka_animestream/helper/classes/anime_obj.dart';
 import 'package:baka_animestream/helper/models/anime_model.dart';
 import 'package:baka_animestream/objectbox.g.dart';
 import 'package:baka_animestream/services/internal_db.dart';
-import 'package:baka_animestream/ui/widgets/details_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

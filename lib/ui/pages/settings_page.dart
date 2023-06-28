@@ -3,16 +3,14 @@ import 'package:baka_animestream/ui/widgets/link_button.dart';
 import 'package:baka_animestream/ui/widgets/settings_fragments/app_update.dart';
 import 'package:baka_animestream/ui/widgets/settings_fragments/db_backup_handler.dart';
 import 'package:baka_animestream/ui/widgets/settings_fragments/theme_settings.dart';
-import 'package:baka_animestream/ui/widgets/settings_fragments/time_handler.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
 
-  InternalAPI internalAPI = Get.find<InternalAPI>();
+  final InternalAPI internalAPI = Get.find<InternalAPI>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +33,18 @@ class SettingsPage extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  ThemeSettings(),
-                  Divider(
+                  const ThemeSettings(),
+                  const Divider(
                     indent: 30,
                     endIndent: 30,
                   ),
                   UpdateApp(),
-                  Divider(
+                  const Divider(
                     indent: 30,
                     endIndent: 30,
                   ),
                   DbBackup(),
-                  Divider(
+                  const Divider(
                     indent: 30,
                     endIndent: 30,
                   ),

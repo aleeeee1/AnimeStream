@@ -43,7 +43,7 @@ class _DetailsContentState extends State<DetailsContent> {
 
   int getLatestIndex() {
     int index = animeModel.lastSeenEpisodeIndex ?? 0;
-    print("index prima: $index");
+    debugPrint("index prima: $index");
 
     int remaining = getRemaining(index);
 
@@ -52,7 +52,7 @@ class _DetailsContentState extends State<DetailsContent> {
     }
 
     index %= (anime.episodes.length - 1);
-    print("index dopo: $index");
+    debugPrint("index dopo: $index");
     return index;
   }
 

@@ -5,7 +5,6 @@ import 'package:baka_animestream/services/internal_db.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:restart_app/restart_app.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class DbBackup extends StatelessWidget {
