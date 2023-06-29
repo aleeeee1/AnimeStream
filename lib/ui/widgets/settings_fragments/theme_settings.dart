@@ -15,12 +15,12 @@ class _ThemeSettingsState extends State<ThemeSettings> {
 
   void setDarkTheme(bool value) {
     theme_manager.setUseDarkTheme(context, value);
-    // setState(() {});
+    setState(() {});
   }
 
   void setDynamicTheme(bool value) {
     theme_manager.setUseDynamicTheme(context, value);
-    // setState(() {});
+    setState(() {});
   }
 
   Future<bool> shouldBeVisible() async {
@@ -35,7 +35,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
           title: const Text(
             "Dark Mode",
           ),
-          subtitle: const Text("Metti la Dark Mode bro"),
+          subtitle: const Text("Attiva la Dark Mode"),
           value: theme_manager.getDarkThemeStatus(),
           onChanged: (value) => setDarkTheme(
             value,
@@ -49,7 +49,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
               title: const Text(
                 "Dynamic Colors",
               ),
-              subtitle: const Text("Metti i colori dinamici bro"),
+              subtitle: const Text("Attiva i colori dinamici"),
               value: theme_manager.getDynamicThemeStatus(),
               onChanged: (value) => setDynamicTheme(
                 value,
