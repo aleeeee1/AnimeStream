@@ -3,7 +3,7 @@ description: Un app per guardare anime
 
 publish_to: "none"
 
-version: 1.1.7+1
+version: 1.1.8+1
 
 environment:
   sdk: ">=2.18.0-44.1.beta <3.0.0"
