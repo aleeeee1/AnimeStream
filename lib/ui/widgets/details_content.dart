@@ -51,7 +51,7 @@ class _DetailsContentState extends State<DetailsContent> {
       index = index + 1;
     }
 
-    index %= (anime.episodes.length - 1);
+    index %= (anime.episodes.length - 1) > 0 ? (anime.episodes.length - 1) : 1;
     debugPrint("index dopo: $index");
     return index;
   }

@@ -43,6 +43,10 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+        <!-- <meta-data
+            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="com.gianlucaparadise.flutter_cast_framework_example.CastOptionsProvider" /> -->
+
         <provider
             android:name="sk.fourq.otaupdate.OtaUpdateFileProvider"
             android:authorities="${applicationId}.ota_update_provider"
