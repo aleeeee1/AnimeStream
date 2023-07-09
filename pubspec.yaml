@@ -3,7 +3,7 @@ description: Un app per guardare anime
 
 publish_to: "none"
 
-version: 1.1.8+1
+version: 1.1.9+1
 
 environment:
   sdk: ">=2.18.0-44.1.beta <3.0.0"
@@ -18,7 +18,6 @@ dependencies:
   cached_network_image: ^3.2.1
   html: ^0.15.0
   expandable_widgets: ^1.0.3+1
-  better_player: ^0.0.83
   animated_text_kit: ^4.2.2
   http: ^0.13.6
   get: ^4.6.5
@@ -48,8 +47,11 @@ dependencies:
   # flutter_meedu_videoplayer:
   #   path: ./forks/flutter_meedu_videoplayer/package
 
-  flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.1
+  # flutter_cast_framework:
+  #   git:
+  #     url: https://github.com/aleeeee1/flutter_cast_framework.git
+  #     ref: master
 
 dependency_overrides:
   video_player_avfoundation:
@@ -84,13 +86,8 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.3.3
   objectbox_generator: any
-  animated_native_splash:
-    git: https://github.com/asbn223/flutter_animated_splash_screen
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
-
-animated_native_splash:
-  jsonFile: assets/splash2.json
