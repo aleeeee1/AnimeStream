@@ -2,17 +2,18 @@
 A simple app in Material Design to watch anime from [AnimeUnity](https://www.animeunity.it) on your phone. <br>
 Works on Android and iOS (tested), probably in other platforms too.
 ## Screenshot
-
-<img src="./mockup/screenshots/Screenshot1.png" width=250>
-<img src="./mockup/screenshots/Screenshot2.png" width=250>
-<img src="./mockup/screenshots/Screenshot3.png" width=250>
-<img src="./mockup/screenshots/Screenshot4.png" width=250>
-<img src="./mockup/screenshots/Screenshot5.png" width=250>
-<img src="./mockup/screenshots/Screenshot6.png" width=250>
-<img src="./mockup/screenshots/Screenshot7.png" width=250>
-<img src="./mockup/screenshots/Screenshot8.png" width=250>
-<img src="./mockup/screenshots/Screenshot9.png" width=250>
-<img src="./mockup/screenshots/Screenshot10.png" width=250>
+<div>
+  <img src="./mockup/screenshots/Screenshot1.png" width=250>
+  <img src="./mockup/screenshots/Screenshot2.png" width=250>
+  <img src="./mockup/screenshots/Screenshot3.png" width=250>
+  <img src="./mockup/screenshots/Screenshot4.png" width=250>
+  <img src="./mockup/screenshots/Screenshot5.png" width=250>
+  <img src="./mockup/screenshots/Screenshot6.png" width=250>
+  <img src="./mockup/screenshots/Screenshot7.png" width=250>
+  <img src="./mockup/screenshots/Screenshot8.png" width=250>
+  <img src="./mockup/screenshots/Screenshot9.png" width=250>
+  <img src="./mockup/screenshots/Screenshot10.png" width=250>
+</div>
 
 ## Features
 - PiP Mode (iOS & Android)
