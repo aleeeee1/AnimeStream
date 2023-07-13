@@ -233,6 +233,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.3"
+  cupertino_icons:
+    dependency: "direct main"
+    description:
+      name: cupertino_icons
+      sha256: e35129dc44c9118cee2a5603506d823bab99c68393879edb440e0090d07586be
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   dart_style:
     dependency: transitive
     description:
@@ -417,6 +425,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_video_cast:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: b6de1cf923db6f2768d133712036fdb3f1eaa4ed
+      url: "https://github.com/daveshirman/flutter_video_cast.git"
+    source: git
+    version: "1.0.3"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

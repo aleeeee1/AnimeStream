@@ -6,8 +6,16 @@ import 'package:get/get.dart';
 import '../../helper/api.dart';
 import '../widgets/anime_row.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final InternalAPI internalAPI = Get.find<InternalAPI>();
+
   final GlobalKey<State<StatefulWidget>> continueKey = GlobalKey();
 
   final rows = [
@@ -33,8 +41,6 @@ class HomePage extends StatelessWidget {
       type: 2,
     ),
   ];
-
-  HomePage({super.key});
 
   refresh() async {
     Get.offAllNamed(RouteGenerator.mainPage);
