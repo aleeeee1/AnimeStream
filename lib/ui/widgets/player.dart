@@ -90,6 +90,10 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
         alignment: Alignment.topLeft,
         child: BackButton(
           color: widget.colorScheme.primary,
+          onPressed: () {
+            WidgetsBinding.instance.removeObserver(this);
+            Get.back();
+          },
         ),
       ),
     );
