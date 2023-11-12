@@ -36,6 +36,7 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
 
   Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
   int index = 0;
+  bool firstTime = true;
 
   int getSeconds() {
     var currTime = animeModel.episodes[widget.episodeId.toString()];
@@ -140,8 +141,12 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
 
   @override
   didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.inactive) {
+    if (state == AppLifecycleState.inactive && firstTime) {
+      firstTime = false;
+      return;
+    }
+
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
       _meeduPlayerController.enterPip(context);
     }
   }
@@ -153,15 +158,11 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
     var current = _meeduPlayerController.position.value;
     var duration = _meeduPlayerController.duration.value;
     // update the lastMinutage of the episode
-    animeModel.episodes[widget.episodeId.toString()] = [
-      current.inSeconds,
-      duration.inSeconds
-    ];
+    animeModel.episodes[widget.episodeId.toString()] = [current.inSeconds, duration.inSeconds];
 
     int remaining = duration.inSeconds - current.inSeconds;
     if (remaining < 120 && remaining != -1 && duration.inSeconds > 0) {
-      animeModel.lastSeenEpisodeIndex =
-          (index + 1) % widget.anime.episodes.length;
+      animeModel.lastSeenEpisodeIndex = (index + 1) % widget.anime.episodes.length;
     }
 
     animeModel.encodeStr();
