@@ -1,13 +1,6 @@
 PODS:
   - auto_orientation (0.0.1):
     - Flutter
-  - better_player (0.0.1):
-    - Cache (~> 6.0.0)
-    - Flutter
-    - GCDWebServer
-    - HLSCachingReverseProxyServer
-    - PINCache
-  - Cache (6.0.0)
   - device_info_plus (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.4):
@@ -47,45 +40,32 @@ PODS:
   - Flutter (1.0.0)
   - flutter_meedu_videoplayer (0.0.1):
     - Flutter
-  - flutter_native_splash (0.0.1):
+  - flutter_video_cast (0.0.1):
     - Flutter
+    - google-cast-sdk-dynamic-xcframework-no-bluetooth
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - GCDWebServer (3.5.4):
-    - GCDWebServer/Core (= 3.5.4)
-  - GCDWebServer/Core (3.5.4)
-  - HLSCachingReverseProxyServer (0.1.0):
-    - GCDWebServer (~> 3.5)
-    - PINCache (>= 3.0.1-beta.3)
-  - media_kit_libs_ios_video (1.0.4):
+  - fvp (0.0.1):
     - Flutter
-  - media_kit_native_event_loop (1.0.0):
-    - Flutter
-  - media_kit_video (0.0.1):
-    - Flutter
-  - ObjectBox (1.8.1)
+    - FlutterMacOS
+    - mdk
+  - google-cast-sdk-dynamic-xcframework-no-bluetooth (4.8.0)
+  - mdk (0.21.1.1)
+  - ObjectBox (1.9.0)
   - objectbox_flutter_libs (0.0.1):
     - Flutter
-    - ObjectBox (= 1.8.1)
+    - ObjectBox (= 1.9.0)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - permission_handler_apple (9.0.4):
+  - permission_handler_apple (9.1.1):
     - Flutter
-  - PINCache (3.0.3):
-    - PINCache/Arc-exception-safe (= 3.0.3)
-    - PINCache/Core (= 3.0.3)
-  - PINCache/Arc-exception-safe (3.0.3):
-    - PINCache/Core
-  - PINCache/Core (3.0.3):
-    - PINOperation (~> 1.2.1)
-  - PINOperation (1.2.2)
   - screen_brightness_ios (0.1.0):
     - Flutter
   - SDWebImage (5.15.8):
@@ -106,48 +86,42 @@ PODS:
     - Flutter
   - volume_controller (0.0.1):
     - Flutter
-  - wakelock (0.0.1):
+  - wakelock_plus (0.0.1):
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - auto_orientation (from `.symlinks/plugins/auto_orientation/ios`)
-  - better_player (from `.symlinks/plugins/better_player/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_meedu_videoplayer (from `.symlinks/plugins/flutter_meedu_videoplayer/ios`)
-  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
+  - flutter_video_cast (from `.symlinks/plugins/flutter_video_cast/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
-  - media_kit_libs_ios_video (from `.symlinks/plugins/media_kit_libs_ios_video/ios`)
-  - media_kit_native_event_loop (from `.symlinks/plugins/media_kit_native_event_loop/ios`)
-  - media_kit_video (from `.symlinks/plugins/media_kit_video/ios`)
+  - fvp (from `.symlinks/plugins/fvp/darwin`)
   - objectbox_flutter_libs (from `.symlinks/plugins/objectbox_flutter_libs/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
-  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - UIPiPView (from `https://github.com/uakihir0/UIPiPView/`, branch `main`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
   - volume_controller (from `.symlinks/plugins/volume_controller/ios`)
-  - wakelock (from `.symlinks/plugins/wakelock/ios`)
+  - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
-    - Cache
     - DKImagePickerController
     - DKPhotoGallery
     - FMDB
-    - GCDWebServer
-    - HLSCachingReverseProxyServer
+    - google-cast-sdk-dynamic-xcframework-no-bluetooth
+    - mdk
     - ObjectBox
-    - PINCache
-    - PINOperation
     - SDWebImage
     - SwiftyGif
     - Toast
@@ -155,8 +129,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   auto_orientation:
     :path: ".symlinks/plugins/auto_orientation/ios"
-  better_player:
-    :path: ".symlinks/plugins/better_player/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   file_picker:
@@ -165,28 +137,24 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_meedu_videoplayer:
     :path: ".symlinks/plugins/flutter_meedu_videoplayer/ios"
-  flutter_native_splash:
-    :path: ".symlinks/plugins/flutter_native_splash/ios"
+  flutter_video_cast:
+    :path: ".symlinks/plugins/flutter_video_cast/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
-  media_kit_libs_ios_video:
-    :path: ".symlinks/plugins/media_kit_libs_ios_video/ios"
-  media_kit_native_event_loop:
-    :path: ".symlinks/plugins/media_kit_native_event_loop/ios"
-  media_kit_video:
-    :path: ".symlinks/plugins/media_kit_video/ios"
+  fvp:
+    :path: ".symlinks/plugins/fvp/darwin"
   objectbox_flutter_libs:
     :path: ".symlinks/plugins/objectbox_flutter_libs/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/ios"
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   screen_brightness_ios:
     :path: ".symlinks/plugins/screen_brightness_ios/ios"
   shared_preferences_foundation:
-    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   UIPiPView:
@@ -198,8 +166,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_player_avfoundation/ios"
   volume_controller:
     :path: ".symlinks/plugins/volume_controller/ios"
-  wakelock:
-    :path: ".symlinks/plugins/wakelock/ios"
+  wakelock_plus:
+    :path: ".symlinks/plugins/wakelock_plus/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
@@ -210,42 +178,36 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   auto_orientation: 102ed811a5938d52c86520ddd7ecd3a126b5d39d
-  better_player: 2406bfe8175203c7a46fa15f9d778d73b12e1646
-  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: ce3938a0df3cc1ef404671531facef740d03f920
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_meedu_videoplayer: 5b898478d509443ff74817795882f5430e2b7001
-  flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
-  fluttertoast: fafc4fa4d01a6a9e4f772ecd190ffa525e9e2d9c
+  flutter_video_cast: a96e0d4c52651e0705dd64f312760cd77ba57e6f
+  fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
-  HLSCachingReverseProxyServer: 59935e1e0244ad7f3375d75b5ef46e8eb26ab181
-  media_kit_libs_ios_video: 96259eccffaa309b63a7ee610c2c7786a3b335e5
-  media_kit_native_event_loop: 9f9eb778d0d806ab9486eff7513f7f90f07d50f8
-  media_kit_video: c6ae801433b484912087b519b45f1beac97b960b
-  ObjectBox: a7900d5335218cd437cbc080b7ccc38a5211f7b4
-  objectbox_flutter_libs: 61d74196d924fbc773da5f5757d1e9fab7b3cc78
-  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
-  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
-  PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
-  PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
+  fvp: cb4a2438331cfd98abcdcac3ae49d0b0456274a2
+  google-cast-sdk-dynamic-xcframework-no-bluetooth: 09d47191ef8821d82e813e754bcf98bc61a3dbc9
+  mdk: 868282c6d69c466118e962c0d3391951b23e5dc8
+  ObjectBox: e7ff611291a0663380e0736b46786bcd077294ff
+  objectbox_flutter_libs: 0948d6feb7de4f7edaebc7a898b9e85b7fc2bc89
+  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   SDWebImage: cb032eba469c54e0000e78bcb0a13cdde0a52798
-  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
+  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   UIPiPView: 5d60e5976a586cec12c411241aff3fcbd3ceb2ac
-  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
   volume_controller: 531ddf792994285c9b17f9d8a7e4dcdd29b3eae9
-  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 
 PODFILE CHECKSUM: 56e8199080f156f2d2629fcf2c4b700d5e65c05c
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

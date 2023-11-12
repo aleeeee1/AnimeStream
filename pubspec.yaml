@@ -3,7 +3,7 @@ description: Un app per guardare anime
 
 publish_to: "none"
 
-version: 1.1.10+1
+version: 1.1.11+1
 
 environment:
   sdk: ">=2.18.0-44.1.beta <3.0.0"
@@ -24,7 +24,7 @@ dependencies:
   shared_preferences: ^2.1.1
   dynamic_themes: ^1.1.0
   device_info_plus: ^8.2.2
-  package_info_plus: ^3.1.2
+  package_info_plus: ^4.2.0
   webview_flutter_plus: ^0.3.0+2
   objectbox: ^2.0.0
   objectbox_flutter_libs: any
@@ -36,14 +36,12 @@ dependencies:
   file_picker: ^5.2.10
   permission_handler: ^10.2.0
   archive: ^3.3.7
-  media_kit_libs_android_video: ^1.0.5
-  media_kit_libs_ios_video: ^1.0.4
+  cupertino_icons: ^1.0.5
   flutter_meedu_videoplayer:
     git:
       url: https://github.com/aleeeee1/flutter_meedu_videoplayer.git
       ref: ios_pip_support
       path: ./package/
-  cupertino_icons: ^1.0.5
 
   # flutter_meedu_videoplayer:
   #   path: ./forks/flutter_meedu_videoplayer/package
