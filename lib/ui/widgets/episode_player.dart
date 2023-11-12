@@ -70,8 +70,7 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
         child: WebViewPlus(
           userAgent:
               "Mozilla/5.0 (Linux; Android 11; SAMSUNG SM-G973U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/14.2 Chrome/87.0.4280.141 Mobile Safari/537.36",
-          initialUrl:
-              "https://www.animeunity.it/anime/${anime.id}-${anime.slug}/${anime.episodes[index]['id']}",
+          initialUrl: "https://www.animeunity.it/anime/${anime.id}-${anime.slug}/${anime.episodes[index]['id']}",
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (controller) async {
             theController = controller;
@@ -79,8 +78,7 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
           onPageFinished: (_) async {
             if (!redirected) {
               redirected = true;
-              String link = await theController.webViewController
-                  .runJavascriptReturningResult(
+              String link = await theController.webViewController.runJavascriptReturningResult(
                 "document.getElementsByTagName(\"iframe\")[0].src",
               );
 
@@ -129,9 +127,10 @@ function generateToken(hours, client_ip, secret) {
 
 getLink();
 """;
-            String link = await theController.webViewController
-                .runJavascriptReturningResult(toRun);
-
+            String link = await theController.webViewController.runJavascriptReturningResult(toRun);
+            if (link == 'null') {
+              link = await theController.webViewController.runJavascriptReturningResult("window.downloadUrl");
+            }
             link = link.replaceAll("\"", "");
             if (link == "null" || !await isLinkOk(link)) {
               setError(true);
