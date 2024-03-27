@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:animestream/helper/classes/anime_obj.dart';
-import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 import 'package:animestream/services/internal_db.dart';
 import 'package:animestream/helper/models/anime_model.dart';
@@ -32,8 +31,6 @@ class _EpisodeTileState extends State<EpisodeTile> {
   late int index;
 
   Widget? fantasticWidget;
-
-  late WebViewPlusController theController;
   Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
 
   late AnimeModel animeModel;

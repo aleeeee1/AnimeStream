@@ -44,7 +44,7 @@ class EpisodePlayer extends StatefulWidget {
 }
 
 class _EpisodePlayerState extends State<EpisodePlayer> {
-  late WebViewPlusController theController;
+  late WebViewControllerPlus theController;
 
   late AnimeClass anime;
   late int index;
@@ -52,58 +52,59 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
   Widget? fantasticWidget;
   InternalAPI internalAPI = Get.find<InternalAPI>();
 
+  bool redirected = false;
   @override
   void initState() {
     anime = widget.anime;
     index = widget.index ?? -1;
 
+    theController = WebViewControllerPlus()
+      ..setUserAgent(
+          "Mozilla/5.0 (Linux; Android 11; SAMSUNG SM-G973U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/14.2 Chrome/87.0.4280.141 Mobile Safari/537.36")
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..onLoaded(
+        (_) async {
+          if (!redirected) {
+            redirected = true;
+            String link = (await theController.runJavaScriptReturningResult(
+              "document.getElementsByTagName(\"iframe\")[0].src",
+            ))
+                .toString();
+
+            if (link == "null") {
+              setError(true);
+            } else {
+              theController.loadRequest(Uri.parse(link.replaceAll("\"", "")));
+            }
+            return;
+          }
+
+          String link = (await theController.runJavaScriptReturningResult("window.downloadUrl")).toString();
+
+          link = link.replaceAll("\"", "");
+          if (link == "null" || !await isLinkOk(link)) {
+            setError(true);
+          } else {
+            openPlayer(link);
+          }
+
+          setLoading(false);
+          setState(() {
+            fantasticWidget = null;
+          });
+        },
+      )
+      ..loadRequest(Uri.parse("https://www.animeunity.it/anime/${anime.id}-${anime.slug}/${anime.episodes[index]['id']}"));
     super.initState();
   }
 
   void initWebView() async {
-    bool redirected = false;
-
     fantasticWidget = SizedBox(
       height: widget.height,
       child: Offstage(
         offstage: true,
-        child: WebViewPlus(
-          userAgent:
-              "Mozilla/5.0 (Linux; Android 11; SAMSUNG SM-G973U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/14.2 Chrome/87.0.4280.141 Mobile Safari/537.36",
-          initialUrl: "https://www.animeunity.it/anime/${anime.id}-${anime.slug}/${anime.episodes[index]['id']}",
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (controller) async {
-            theController = controller;
-          },
-          onPageFinished: (_) async {
-            if (!redirected) {
-              redirected = true;
-              String link = await theController.webViewController.runJavascriptReturningResult(
-                "document.getElementsByTagName(\"iframe\")[0].src",
-              );
-
-              if (link == "null") {
-                setError(true);
-              } else {
-                theController.loadUrl(link.replaceAll("\"", ""));
-              }
-              return;
-            }
-
-            String link = await theController.webViewController.runJavascriptReturningResult("window.downloadUrl");
-
-            link = link.replaceAll("\"", "");
-            if (link == "null" || !await isLinkOk(link)) {
-              setError(true);
-            } else {
-              openPlayer(link);
-            }
-
-            setLoading(false);
-            setState(() {
-              fantasticWidget = null;
-            });
-          },
+        child: WebViewWidget(
+          controller: theController,
         ),
       ),
     );
@@ -166,6 +167,7 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
     trackProgress();
 
     if (!await isLinkOk(link)) {
+      redirected = false;
       initWebView();
     } else {
       setLoading(false);
