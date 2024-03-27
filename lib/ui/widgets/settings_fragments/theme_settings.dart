@@ -1,6 +1,6 @@
-import 'package:baka_animestream/services/internal_api.dart';
+import 'package:animestream/services/internal_api.dart';
 import 'package:flutter/material.dart';
-import 'package:baka_animestream/ui/theme/theme_manager.dart' as theme_manager;
+import 'package:animestream/ui/theme/theme_manager.dart' as theme_manager;
 import 'package:get/get.dart';
 
 class ThemeSettings extends StatefulWidget {

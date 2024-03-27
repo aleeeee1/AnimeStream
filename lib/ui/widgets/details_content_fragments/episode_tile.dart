@@ -1,16 +1,16 @@
-import 'package:baka_animestream/helper/api.dart';
-import 'package:baka_animestream/services/internal_api.dart';
-import 'package:baka_animestream/ui/widgets/details_content.dart';
-import 'package:baka_animestream/ui/widgets/episode_player.dart';
+import 'package:animestream/helper/api.dart';
+import 'package:animestream/services/internal_api.dart';
+import 'package:animestream/ui/widgets/details_content.dart';
+import 'package:animestream/ui/widgets/episode_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:baka_animestream/helper/classes/anime_obj.dart';
+import 'package:animestream/helper/classes/anime_obj.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
-import 'package:baka_animestream/services/internal_db.dart';
-import 'package:baka_animestream/helper/models/anime_model.dart';
-import 'package:baka_animestream/objectbox.g.dart';
+import 'package:animestream/services/internal_db.dart';
+import 'package:animestream/helper/models/anime_model.dart';
+import 'package:animestream/objectbox.g.dart';
 
 class EpisodeTile extends StatefulWidget {
   final AnimeClass anime;
@@ -64,10 +64,7 @@ class _EpisodeTileState extends State<EpisodeTile> {
           child: Container(
             height: 63,
             decoration: BoxDecoration(
-              color: Theme.of(context)
-                  .colorScheme
-                  .secondaryContainer
-                  .withAlpha(60),
+              color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(60),
               borderRadius: const BorderRadius.all(
                 Radius.circular(7),
               ),
@@ -215,12 +212,9 @@ class LoadingThings extends GetxController {
   }
 
   double getProgress() {
-    if (animeModel.episodes
-        .containsKey(anime.episodes[index]['id'].toString())) {
-      var currTime =
-          animeModel.episodes[anime.episodes[index]['id'].toString()][0];
-      var totTime =
-          animeModel.episodes[anime.episodes[index]['id'].toString()][1];
+    if (animeModel.episodes.containsKey(anime.episodes[index]['id'].toString())) {
+      var currTime = animeModel.episodes[anime.episodes[index]['id'].toString()][0];
+      var totTime = animeModel.episodes[anime.episodes[index]['id'].toString()][1];
 
       return (currTime / totTime);
     }

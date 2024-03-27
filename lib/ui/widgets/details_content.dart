@@ -1,12 +1,12 @@
-import 'package:baka_animestream/helper/api.dart';
-import 'package:baka_animestream/helper/models/anime_model.dart';
-import 'package:baka_animestream/ui/widgets/details_content_fragments/episode_tile.dart';
-import 'package:baka_animestream/ui/widgets/episode_player.dart';
+import 'package:animestream/helper/api.dart';
+import 'package:animestream/helper/models/anime_model.dart';
+import 'package:animestream/ui/widgets/details_content_fragments/episode_tile.dart';
+import 'package:animestream/ui/widgets/episode_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_widgets/expandable_widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'package:baka_animestream/helper/classes/anime_obj.dart';
+import 'package:animestream/helper/classes/anime_obj.dart';
 import 'package:get/get.dart';
 
 class DetailsContent extends StatefulWidget {
@@ -28,12 +28,9 @@ class _DetailsContentState extends State<DetailsContent> {
   late ResumeController resumeController;
 
   int getRemaining(int index) {
-    if (animeModel.episodes
-        .containsKey(anime.episodes[index]['id'].toString())) {
-      var currTime =
-          animeModel.episodes[anime.episodes[index]['id'].toString()][0];
-      var totTime =
-          animeModel.episodes[anime.episodes[index]['id'].toString()][1];
+    if (animeModel.episodes.containsKey(anime.episodes[index]['id'].toString())) {
+      var currTime = animeModel.episodes[anime.episodes[index]['id'].toString()][0];
+      var totTime = animeModel.episodes[anime.episodes[index]['id'].toString()][1];
 
       return totTime - currTime;
     }
@@ -122,8 +119,7 @@ class _DetailsContentState extends State<DetailsContent> {
                         children: [
                           for (var a in anime.genres)
                             Chip(
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               labelPadding: const EdgeInsets.only(
                                 top: -6,
                                 bottom: -6,
@@ -134,9 +130,7 @@ class _DetailsContentState extends State<DetailsContent> {
                               label: Text(
                                 a['name'],
                                 style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondaryContainer,
+                                  color: Theme.of(context).colorScheme.onSecondaryContainer,
                                   fontSize: 12.5,
                                 ),
                               ),
@@ -146,9 +140,7 @@ class _DetailsContentState extends State<DetailsContent> {
                                   strokeAlign: BorderSide.strokeAlignOutside,
                                 ),
                               ),
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer,
+                              backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
                             )
                         ],
                       ),
@@ -182,9 +174,7 @@ class _DetailsContentState extends State<DetailsContent> {
             backgroundColor: Theme.of(context).colorScheme.background,
             boxShadow: const [],
             textWidget: Text(
-              anime.description.length > 50
-                  ? anime.description
-                  : anime.description + " " * 50,
+              anime.description.length > 50 ? anime.description : anime.description + " " * 50,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 15,
@@ -224,9 +214,7 @@ class _DetailsContentState extends State<DetailsContent> {
                       controller.error.value
                           ? Icon(
                               Icons.error,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSecondaryContainer,
+                              color: Theme.of(context).colorScheme.onSecondaryContainer,
                             )
                           : controller.loading.value
                               ? const SizedBox(
@@ -238,9 +226,7 @@ class _DetailsContentState extends State<DetailsContent> {
                                 )
                               : Icon(
                                   Icons.play_arrow,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondaryContainer,
+                                  color: Theme.of(context).colorScheme.onSecondaryContainer,
                                 ),
                       const SizedBox(
                         width: 10,
@@ -248,9 +234,7 @@ class _DetailsContentState extends State<DetailsContent> {
                       Text(
                         "Riprendi",
                         style: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSecondaryContainer,
+                          color: Theme.of(context).colorScheme.onSecondaryContainer,
                         ),
                       ),
                     ],
@@ -333,8 +317,7 @@ class ResumeController extends GetxController {
   final Rx<int> index;
   final AnimeClass anime;
 
-  ResumeController({required int index_, required this.anime})
-      : index = index_.obs;
+  ResumeController({required int index_, required this.anime}) : index = index_.obs;
 
   updateIndex() {
     AnimeModel animeModel = fetchAnimeModel(anime);

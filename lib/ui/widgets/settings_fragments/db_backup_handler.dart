@@ -1,7 +1,7 @@
-import 'package:baka_animestream/helper/api.dart';
-import 'package:baka_animestream/objectbox.g.dart';
-import 'package:baka_animestream/services/internal_api.dart';
-import 'package:baka_animestream/services/internal_db.dart';
+import 'package:animestream/helper/api.dart';
+import 'package:animestream/objectbox.g.dart';
+import 'package:animestream/services/internal_api.dart';
+import 'package:animestream/services/internal_db.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:file_picker/file_picker.dart';
@@ -73,8 +73,7 @@ class DbBackup extends StatelessWidget {
   resetDb() {
     Get.defaultDialog(
       title: "Attenzione",
-      middleText:
-          "Sei sicuro di voler ripristinare il database allo stato iniziale?",
+      middleText: "Sei sicuro di voler ripristinare il database allo stato iniziale?",
       textConfirm: "Si",
       textCancel: "No",
       onConfirm: () async {

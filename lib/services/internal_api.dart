@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
-import 'package:baka_animestream/services/internal_db.dart';
+import 'package:animestream/services/internal_db.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,9 +24,7 @@ class InternalAPI {
   Future<void> initialize() async {
     prefs = await SharedPreferences.getInstance();
 
-    final docsDir = Platform.isAndroid
-        ? await p_provider.getApplicationDocumentsDirectory()
-        : await p_provider.getLibraryDirectory();
+    final docsDir = Platform.isAndroid ? await p_provider.getApplicationDocumentsDirectory() : await p_provider.getLibraryDirectory();
 
     dbPath = p.join(docsDir.path, "obx");
     dbBackupPath = p.join(docsDir.path, "obx-backup");

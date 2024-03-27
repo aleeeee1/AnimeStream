@@ -1,13 +1,13 @@
-import 'package:baka_animestream/helper/classes/anime_obj.dart';
-import 'package:baka_animestream/services/internal_api.dart';
+import 'package:animestream/helper/classes/anime_obj.dart';
+import 'package:animestream/services/internal_api.dart';
 import 'package:html/dom.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:baka_animestream/helper/models/anime_model.dart';
-import 'package:baka_animestream/objectbox.g.dart';
-import 'package:baka_animestream/services/internal_db.dart';
+import 'package:animestream/helper/models/anime_model.dart';
+import 'package:animestream/objectbox.g.dart';
+import 'package:animestream/services/internal_db.dart';
 import 'package:get/get.dart';
 
 Box objBox = Get.find<ObjectBox>().store.box<AnimeModel>();
@@ -90,10 +90,7 @@ Future<List> toContinueAnime() {
     } else if (b.lastSeenDate == null) {
       return -1;
     } else {
-      return a.lastSeenDate!.millisecondsSinceEpoch >
-              b.lastSeenDate!.millisecondsSinceEpoch
-          ? -1
-          : 1;
+      return a.lastSeenDate!.millisecondsSinceEpoch > b.lastSeenDate!.millisecondsSinceEpoch ? -1 : 1;
     }
   });
 
@@ -114,8 +111,7 @@ AnimeModel fetchAnimeModel(AnimeClass anime) {
 }
 
 Future<String> getLatestVersionUrl(version) async {
-  String url =
-      "${internalAPI.repoLink}/releases/download/$version/app-release.apk";
+  String url = "${internalAPI.repoLink}/releases/download/$version/app-release.apk";
 
   return url;
 }
@@ -129,9 +125,7 @@ Future<String> getLatestVersion() async {
     var response = await http.get(url);
     var document = parse(response.body);
 
-    var release = document
-        .getElementsByTagName('h1')
-        .firstWhere((element) => element.text.startsWith("Release"));
+    var release = document.getElementsByTagName('h1').firstWhere((element) => element.text.startsWith("Release"));
 
     var version = release.text.replaceAll("Release ", "");
     // version = version.substring(0, version.indexOf("+"));

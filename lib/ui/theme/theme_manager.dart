@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 
-import 'package:baka_animestream/services/internal_api.dart';
+import 'package:animestream/services/internal_api.dart';
 
 InternalAPI internalAPI = Get.find<InternalAPI>();
 
@@ -32,8 +32,7 @@ Future<void> setUseDarkTheme(BuildContext context, bool value) async {
   }
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-      systemNavigationBarIconBrightness:
-          value ? Brightness.light : Brightness.dark,
+      systemNavigationBarIconBrightness: value ? Brightness.light : Brightness.dark,
     ),
   );
 }

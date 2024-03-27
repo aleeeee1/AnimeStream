@@ -1,4 +1,4 @@
-import 'package:baka_animestream/helper/models/anime_model.dart';
+import 'package:animestream/helper/models/anime_model.dart';
 
 class AnimeClass {
   String title;

@@ -1,4 +1,4 @@
-import 'package:baka_animestream/services/internal_api.dart';
+import 'package:animestream/services/internal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

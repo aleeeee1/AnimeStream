@@ -1,5 +1,5 @@
-import 'package:baka_animestream/services/internal_api.dart';
-import 'package:baka_animestream/settings/routes.dart';
+import 'package:animestream/services/internal_api.dart';
+import 'package:animestream/settings/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

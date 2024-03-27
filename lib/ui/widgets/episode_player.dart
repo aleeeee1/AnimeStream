@@ -1,17 +1,17 @@
-import 'package:baka_animestream/helper/api.dart';
-import 'package:baka_animestream/ui/widgets/details_content.dart';
-import 'package:baka_animestream/ui/widgets/details_content_fragments/episode_tile.dart';
+import 'package:animestream/helper/api.dart';
+import 'package:animestream/ui/widgets/details_content.dart';
+import 'package:animestream/ui/widgets/details_content_fragments/episode_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:baka_animestream/services/internal_api.dart';
-import 'package:baka_animestream/ui/widgets/player.dart';
+import 'package:animestream/services/internal_api.dart';
+import 'package:animestream/ui/widgets/player.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
-import 'package:baka_animestream/helper/classes/anime_obj.dart';
+import 'package:animestream/helper/classes/anime_obj.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
-import 'package:baka_animestream/services/internal_db.dart';
-import 'package:baka_animestream/helper/models/anime_model.dart';
+import 'package:animestream/services/internal_db.dart';
+import 'package:animestream/helper/models/anime_model.dart';
 
 class EpisodePlayer extends StatefulWidget {
   final AnimeClass anime;

@@ -1,9 +1,9 @@
-import 'package:baka_animestream/settings/routes.dart';
+import 'package:animestream/settings/routes.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:baka_animestream/theme.dart';
+import 'package:animestream/theme.dart';
 
 class DynamicThemeBuilder extends StatelessWidget {
   const DynamicThemeBuilder({

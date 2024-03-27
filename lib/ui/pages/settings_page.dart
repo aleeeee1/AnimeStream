@@ -1,8 +1,8 @@
-import 'package:baka_animestream/services/internal_api.dart';
-import 'package:baka_animestream/ui/widgets/link_button.dart';
-import 'package:baka_animestream/ui/widgets/settings_fragments/app_update.dart';
-import 'package:baka_animestream/ui/widgets/settings_fragments/db_backup_handler.dart';
-import 'package:baka_animestream/ui/widgets/settings_fragments/theme_settings.dart';
+import 'package:animestream/services/internal_api.dart';
+import 'package:animestream/ui/widgets/link_button.dart';
+import 'package:animestream/ui/widgets/settings_fragments/app_update.dart';
+import 'package:animestream/ui/widgets/settings_fragments/db_backup_handler.dart';
+import 'package:animestream/ui/widgets/settings_fragments/theme_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:baka_animestream/ui/pages/search_page.dart';
-import 'package:baka_animestream/ui/pages/settings_page.dart';
-import 'package:baka_animestream/ui/pages/home_page.dart';
+import 'package:animestream/ui/pages/search_page.dart';
+import 'package:animestream/ui/pages/settings_page.dart';
+import 'package:animestream/ui/pages/home_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -54,8 +54,7 @@ class _MainPageState extends State<MainPage> {
           // labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           animationDuration: const Duration(milliseconds: 1200),
           selectedIndex: index,
-          onDestinationSelected: (value) =>
-              index == value ? null : setState(() => index = value),
+          onDestinationSelected: (value) => index == value ? null : setState(() => index = value),
           destinations: [
             NavigationDestination(
               icon: Icon(

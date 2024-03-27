@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:baka_animestream/helper/api.dart';
-import 'package:baka_animestream/services/internal_api.dart';
+import 'package:animestream/helper/api.dart';
+import 'package:animestream/services/internal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';

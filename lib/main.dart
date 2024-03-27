@@ -1,12 +1,12 @@
-import 'package:baka_animestream/services/internal_api.dart';
-import 'package:baka_animestream/ui/pages/main_page.dart';
-import 'package:baka_animestream/ui/theme/theme_builder.dart';
+import 'package:animestream/services/internal_api.dart';
+import 'package:animestream/ui/pages/main_page.dart';
+import 'package:animestream/ui/theme/theme_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 
-import 'package:baka_animestream/services/internal_db.dart';
+import 'package:animestream/services/internal_db.dart';
 
 import 'package:flutter_meedu_videoplayer/meedu_player.dart';
 
@@ -36,7 +36,6 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.black.withOpacity(0.002),
-      
     ),
   );
 

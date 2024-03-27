@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
 
-import 'package:baka_animestream/helper/api.dart';
-import 'package:baka_animestream/helper/classes/anime_obj.dart';
-import 'package:baka_animestream/settings/routes.dart';
-import 'package:baka_animestream/ui/widgets/anime_fetch_error.dart';
+import 'package:animestream/helper/api.dart';
+import 'package:animestream/helper/classes/anime_obj.dart';
+import 'package:animestream/settings/routes.dart';
+import 'package:animestream/ui/widgets/anime_fetch_error.dart';
 
 class LoadingPageForAnime extends StatefulWidget {
   final AnimeClass animeObj;
@@ -107,9 +107,7 @@ class LoadingPageForAnimeState extends State<LoadingPageForAnime> {
                               child: Text(
                                 widget.animeObj.title,
                                 style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground,
+                                  color: Theme.of(context).colorScheme.onBackground,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
