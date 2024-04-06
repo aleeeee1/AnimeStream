@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 import 'package:animestream/helper/classes/anime_obj.dart';
-import 'package:webview_flutter_plus/webview_flutter_plus.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:animestream/services/internal_db.dart';
 import 'package:animestream/helper/models/anime_model.dart';
@@ -44,7 +44,7 @@ class EpisodePlayer extends StatefulWidget {
 }
 
 class _EpisodePlayerState extends State<EpisodePlayer> {
-  late WebViewControllerPlus theController;
+  late WebViewController theController;
 
   late AnimeClass anime;
   late int index;
@@ -53,49 +53,95 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
   InternalAPI internalAPI = Get.find<InternalAPI>();
 
   bool redirected = false;
+  bool alreadyLoaded = false;
   @override
   void initState() {
     anime = widget.anime;
-    index = widget.index ?? -1;
+    index = widget.index ?? 0;
 
-    theController = WebViewControllerPlus()
+    theController = WebViewController()
       ..setUserAgent(
-          "Mozilla/5.0 (Linux; Android 11; SAMSUNG SM-G973U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/14.2 Chrome/87.0.4280.141 Mobile Safari/537.36")
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.2420.81')
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..onLoaded(
-        (_) async {
-          if (!redirected) {
-            redirected = true;
-            String link = (await theController.runJavaScriptReturningResult(
-              "document.getElementsByTagName(\"iframe\")[0].src",
-            ))
-                .toString();
-
-            if (link == "null") {
-              setError(true);
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onNavigationRequest: (request) {
+            Uri uri = Uri.parse(request.url);
+            if (uri.host.contains("www.animeunity.") || uri.host.contains("scws-content.net")) {
+              debugPrint("Navigating to: ${uri}");
+              return NavigationDecision.navigate;
             } else {
-              theController.loadRequest(Uri.parse(link.replaceAll("\"", "")));
+              debugPrint("Preventing navigation to: ${uri}");
+              return NavigationDecision.prevent;
             }
-            return;
-          }
+          },
+          onUrlChange: (url) {
+            debugPrint("url changed in: ${url.url}");
+          },
+          onPageFinished: (url) {
+            debugPrint("Page finished: ${url}");
+            loadUrl();
+          },
+        ),
+      );
 
-          String link = (await theController.runJavaScriptReturningResult("window.downloadUrl")).toString();
-
-          link = link.replaceAll("\"", "");
-          if (link == "null" || !await isLinkOk(link)) {
-            setError(true);
-          } else {
-            openPlayer(link);
-          }
-
-          setLoading(false);
-          setState(() {
-            fantasticWidget = null;
-          });
-        },
-      )
-      ..loadRequest(Uri.parse("https://www.animeunity.it/anime/${anime.id}-${anime.slug}/${anime.episodes[index]['id']}"));
     super.initState();
+  }
+
+  Future<void> loadUrl() async {
+    debugPrint("Called loadURL");
+
+    if (alreadyLoaded) return;
+    alreadyLoaded = true;
+
+    var res = await theController.runJavaScriptReturningResult("document.location.href");
+    int tries = 0;
+    while (res == "\"about:blank\"" && tries < 5) {
+      await Future.delayed(Duration(seconds: 1));
+      tries++;
+
+      res = await theController.runJavaScriptReturningResult("document.location.href");
+      res = res.toString();
+    }
+
+    if (res == "\"about:blank\"") {
+      setError(true);
+    } else {
+      debugPrint("Loaded URL: $res");
+
+      if (!redirected) {
+        redirected = true;
+
+        var videoLink = await theController.runJavaScriptReturningResult('document.getElementsByTagName("iframe")[0].src');
+        videoLink = videoLink.toString();
+
+        debugPrint("Video link: $videoLink");
+
+        if (videoLink == "null") {
+          setError(true);
+        } else {
+          theController.loadRequest(Uri.parse(videoLink.toString().replaceAll("\"", "")));
+        }
+
+        alreadyLoaded = false;
+        return;
+      }
+
+      String link = (await theController.runJavaScriptReturningResult("window.downloadUrl")).toString();
+      link = link.replaceAll("\"", "");
+
+      if (link == "null" || !await isLinkOk(link)) {
+        setError(true);
+      } else {
+        openPlayer(link);
+      }
+    }
+
+    alreadyLoaded = false;
+    setLoading(false);
+    setState(() {
+      fantasticWidget = null;
+    });
   }
 
   void initWebView() async {
@@ -108,8 +154,10 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
         ),
       ),
     );
-
     setState(() {});
+
+    Uri url = Uri.parse("https://www.animeunity.it/anime/${anime.id}-${anime.slug}/${anime.episodes[index]['id']}");
+    await theController.loadRequest(url);
   }
 
   void setError(bool value) {
@@ -138,7 +186,7 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
     await Get.to(
       () => PlayerPage(
         url: link,
-        colorScheme: Theme.of(context).colorScheme,
+        colorScheme: Theme.of(Get.context!).colorScheme,
         animeId: anime.id,
         episodeId: anime.episodes[index]['id'],
         anime: anime,
@@ -163,16 +211,10 @@ class _EpisodePlayerState extends State<EpisodePlayer> {
       index = widget.resumeController.index.value % (anime.episodes.length);
     }
 
-    var link = anime.episodes[index]['link'];
     trackProgress();
 
-    if (!await isLinkOk(link)) {
-      redirected = false;
-      initWebView();
-    } else {
-      setLoading(false);
-      openPlayer(link);
-    }
+    redirected = false;
+    initWebView();
   }
 
   @override

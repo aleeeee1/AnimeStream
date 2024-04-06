@@ -47,6 +47,8 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
   @override
   void initState() {
     debugPrint("Player page");
+    debugPrint("URL: ${widget.url}");
+
     WidgetsBinding.instance.addObserver(this);
 
     animeModel = objBox.get(widget.animeId);
@@ -151,7 +153,7 @@ class PlayerPageState extends State<PlayerPage> with WidgetsBindingObserver {
     }
 
     if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
-      _meeduPlayerController.enterPip(context);
+      // _meeduPlayerController.enterPip(context);
     }
   }
 
